@@ -46,7 +46,7 @@ body{min-height:100vh}
 .schedule-day{margin-bottom:14px}.schedule-title{font-weight:800;margin:0 0 8px;font-size:15px}.slot{display:grid;grid-template-columns:78px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.slot:last-child{border-bottom:0}.slot .st{font-size:12px;font-weight:800;color:var(--muted)}.slot .ss{font-size:13px;font-weight:750}.slot.break .ss,.slot.break .st{color:#93a2a6}.slot.break{background:#fafcfc;padding-left:8px;padding-right:8px;border-radius:10px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:12px}.stat b{font-size:20px;display:block}.stat span{font-size:11px;color:var(--muted);font-weight:700;line-height:1.25;display:block;margin-top:2px}
 .bottomnav{position:fixed;z-index:30;left:50%;bottom:0;transform:translateX(-50%);width:min(760px,100%);background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding:8px 12px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -8px 25px rgba(20,54,61,.06)}.navbtn{border:0;background:transparent;padding:7px 4px;border-radius:14px;color:#6f8389;cursor:pointer;font-weight:700;font-size:11px}.navbtn svg{display:block;margin:0 auto 4px;width:21px;height:21px}.navbtn.active{color:var(--brand);background:var(--brandSoft)}
-.drawer-back{display:none;position:fixed;inset:0;background:rgba(10,31,37,.3);z-index:50}.drawer-back.open{display:block}.drawer{position:absolute;right:0;top:0;height:100%;width:min(360px,90vw);background:white;padding:calc(20px + env(safe-area-inset-top)) 18px 20px;box-shadow:-15px 0 40px rgba(20,54,61,.15)}.drawer-head{display:flex;align-items:center;justify-content:space-between}.drawer h3{margin:0}.setting{padding:16px 0;border-bottom:1px solid var(--line)}.setting label{display:block;font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-bottom:8px}.langrow{display:flex;gap:8px}.langrow button{border:1px solid var(--line);background:white;padding:8px 12px;border-radius:11px;cursor:pointer;font-weight:800}.langrow button.active{background:var(--brand);color:white;border-color:var(--brand)}.tiny{font-size:11px;color:var(--muted);line-height:1.5}.source-badge{display:inline-block;background:#f1f5f5;border-radius:999px;padding:5px 8px;font-size:10px;color:#60757b;margin:3px 3px 0 0}
+.drawer-back{display:none;position:fixed;inset:0;background:rgba(10,31,37,.3);z-index:50;overflow:hidden}.drawer-back.open{display:block}.drawer{position:absolute;right:0;top:0;height:100%;max-height:100dvh;width:min(360px,90vw);background:white;padding:calc(20px + env(safe-area-inset-top)) 18px calc(32px + env(safe-area-inset-bottom));box-shadow:-15px 0 40px rgba(20,54,61,.15);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.drawer-head{display:flex;align-items:center;justify-content:space-between}.drawer h3{margin:0}.setting{padding:16px 0;border-bottom:1px solid var(--line)}.setting label{display:block;font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-bottom:8px}.langrow{display:flex;gap:8px}.langrow button{border:1px solid var(--line);background:white;padding:8px 12px;border-radius:11px;cursor:pointer;font-weight:800}.langrow button.active{background:var(--brand);color:white;border-color:var(--brand)}.tiny{font-size:11px;color:var(--muted);line-height:1.5}.source-badge{display:inline-block;background:#f1f5f5;border-radius:999px;padding:5px 8px;font-size:10px;color:#60757b;margin:3px 3px 0 0}
 .empty{padding:18px;text-align:center;color:var(--muted);font-size:13px;background:white;border:1px dashed #cbdadc;border-radius:16px}
 .only-parent,.only-student{display:none}.role-parent .only-parent{display:block}.role-student .only-student{display:block}
 .role-parent .bottomnav{display:none}.role-parent .main{padding-bottom:28px}.pas-upload{display:grid;gap:9px}.upload-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;border:1px dashed var(--brand);background:var(--brandSoft);color:var(--brand);padding:11px 12px;border-radius:12px;cursor:pointer;font-weight:800;font-size:12px}.upload-btn:hover{filter:brightness(.985)}.upload-status{border:1px solid var(--line);border-radius:11px;padding:9px 10px;background:#fafcfc;font-size:11px;line-height:1.45;color:var(--muted)}.upload-status b{color:var(--ink)}.upload-actions{display:flex;gap:8px;flex-wrap:wrap}.mini-btn{border:1px solid var(--line);background:white;padding:7px 9px;border-radius:10px;cursor:pointer;font-size:11px;font-weight:800;color:var(--brand)}
@@ -97,10 +97,10 @@ body{min-height:100vh}
   <div class="drawer-head"><h3 data-i18n="settings">Configuración</h3><button class="iconbtn" id="closeDrawer" aria-label="Cerrar">×</button></div>
   <div class="setting"><label data-i18n="language">Idioma de interfaz</label><div class="langrow"><button data-lang="es" class="active">ES</button><button data-lang="en">EN</button></div></div>
   <div class="setting"><label data-i18n="theme">Color de la aplicación</label><div class="theme-row"><button class="theme-btn" data-theme-choice="ocean"><span class="swatch ocean"></span><span data-i18n="themeOcean">Turquesa</span></button><button class="theme-btn" data-theme-choice="blue"><span class="swatch blue"></span><span data-i18n="themeBlue">Azul</span></button><button class="theme-btn" data-theme-choice="violet"><span class="swatch violet"></span><span data-i18n="themeViolet">Violeta</span></button></div></div>
-  <div class="setting"><label data-i18n="activeSources">Fuentes activas</label><div><span class="source-badge">Horario V3</span><span class="source-badge" id="activePasBadge">PAS 005</span></div><p class="tiny" data-i18n="sourceNote">El PAS semanal prevalece sobre el horario general cuando exista contradicción.</p></div>
-  <div class="setting"><label data-i18n="weeklyPas">PAS semanal</label><div class="pas-upload"><div class="share-tip"><b>Actualizar PAS</b>En Android con la PWA instalada: desde WhatsApp toca <b style="display:inline">Compartir → PAS Family Planner</b>. Como respaldo, selecciónalo aquí.</div><input id="pasFileInput" type="file" accept="application/pdf,.pdf" hidden><button class="upload-btn" id="pasUploadBtn" type="button"><span>＋</span><span data-i18n="loadPas">Seleccionar PDF</span></button><div class="upload-status" id="pasUploadStatus"><b>PAS activo:</b> PAS 005 · 7–11 septiembre</div><div class="pas-preview" id="pasPreview" style="display:none"></div><div class="upload-actions" id="pasPreviewActions" style="display:none"><button class="mini-btn primary-mini" id="activatePasBtn" type="button">Activar PAS</button><button class="mini-btn danger-mini" id="discardPasBtn" type="button">Descartar</button></div><div class="upload-actions" id="pasUploadActions" style="display:none"><button class="mini-btn" id="openUploadedPas" type="button" data-i18n="openLoadedPas">Abrir PDF</button></div><p class="tiny" data-i18n="loadPasNote">El PDF se analiza primero. Verás un resumen antes de activarlo; si hay ambigüedades, la aplicación las marca para revisión.</p></div></div>
+  <div class="setting"><label data-i18n="activeSources">Fuentes activas</label><div><span class="source-badge">Horario V3</span><span class="source-badge" id="activePasBadge">PAS 006</span></div><p class="tiny" data-i18n="sourceNote">El PAS semanal prevalece sobre el horario general cuando exista contradicción.</p></div>
+  <div class="setting"><label data-i18n="weeklyPas">PAS semanal</label><div class="pas-upload"><div class="share-tip"><b>Actualizar PAS</b>En Android con la PWA instalada: desde WhatsApp toca <b style="display:inline">Compartir → PAS Family Planner</b>. Como respaldo, selecciónalo aquí.</div><input id="pasFileInput" type="file" accept="application/pdf,.pdf" hidden><button class="upload-btn" id="pasUploadBtn" type="button"><span>＋</span><span data-i18n="loadPas">Seleccionar PDF</span></button><div class="upload-status" id="pasUploadStatus"><b>PAS activo:</b> PAS 006 · 14–18 septiembre</div><div class="pas-preview" id="pasPreview" style="display:none"></div><div class="upload-actions" id="pasPreviewActions" style="display:none"><button class="mini-btn primary-mini" id="activatePasBtn" type="button">Activar PAS</button><button class="mini-btn danger-mini" id="discardPasBtn" type="button">Descartar</button></div><div class="upload-actions" id="pasUploadActions" style="display:none"><button class="mini-btn" id="openUploadedPas" type="button" data-i18n="openLoadedPas">Abrir PDF</button></div><p class="tiny" data-i18n="loadPasNote">El PDF se analiza primero. Verás un resumen antes de activarlo; si hay ambigüedades, la aplicación las marca para revisión.</p></div></div>
   <div class="setting"><label data-i18n="sync">Checklist</label><p class="tiny" data-i18n="syncNote">En este HTML portátil, los checks se guardan en este navegador. La sincronización entre celulares requiere conectar el backend compartido al publicar la PWA.</p></div>
-  <div class="setting"><label data-i18n="version">Versión</label><p class="tiny" id="versionText">PAS Family Planner · v0.2.4 · 07/09/2026</p></div>
+  <div class="setting"><label data-i18n="version">Versión</label><p class="tiny" id="versionText">PAS Family Planner · v0.2.5 · 13/09/2026</p></div>
 </aside></div>
 
 <script>window.pdfjsReady=import("./assets/pdf.min.mjs").then(m=>{window.pdfjsLib=m;return m});</script>
@@ -115,7 +115,7 @@ const MONTHS={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,
 const SUBJECT_ALIASES={
   mathematics:'Math',math:'Math','sociales studies':'Social Studies','social studies':'Social Studies','lenguaje y literatura':'Spanish',spanish:'Spanish',english:'English',arts:'Arts',physics:'Physics',religion:'Religion',chemistry:'Chemistry','physical education':'Physical Education',science:'Science',dll:'DLL','digital language learning':'DLL',philosophy:'Philosophy','novus a+':'Novus A+',pat:'PAT',pei:'PEI'
 };
-const SUBJECT_NAMES=['Religion','Science','Social Studies','Spanish','Arts','Physical Education','Math','English','Novus A+','Digital Language Learning','Philosophy','Physics','Chemistry'];
+const SUBJECT_NAMES=['Religion','Science','Social Studies','Sociales Studies','Spanish','Lenguaje y literatura','Arts','Physical Education','Math','Mathematics','English','Novus A+','Digital Language Learning','Philosophy','Physics','Chemistry'];
 
 function clean(s){return String(s||'').replace(/\s+/g,' ').trim()}
 function stripAccents(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
@@ -355,8 +355,17 @@ function buildPrep(subjects,schedule){
     if(subject==='Math'){
       const wed=mat.match(/\(?\s*Traer\s+(.+?)\s+para\s+el\s+mi[eé]rcoles\)?/i);
       if(wed)prep.push({id:'math-drawing-kit',subject:'Math',label:'Math: '+clean(wed[1]),days:['WED'],sourceText:clean(wed[0])});
-      const phone=mat.match(/Se necesita celular los lunes, jueves y viernes\.?/i);
-      if(phone)prep.push({id:'math-phone',subject:'Math',label:'Celular para Math',days:['MON','THU','FRI'],sourceText:clean(phone[0])});
+      const phone=mat.match(/Se necesita celular (?:los?|el)\s+([^.]*)\.?/i);
+      if(phone){
+        const rawDays=norm(phone[1]);
+        const days=[];
+        if(/\blunes\b/.test(rawDays))days.push('MON');
+        if(/\bmartes\b/.test(rawDays))days.push('TUE');
+        if(/\bmi[eé]rcoles\b/.test(rawDays)||/\bmiercoles\b/.test(rawDays))days.push('WED');
+        if(/\bjueves\b/.test(rawDays))days.push('THU');
+        if(/\bviernes\b/.test(rawDays))days.push('FRI');
+        if(days.length)prep.push({id:'math-phone',subject:'Math',label:'Celular para Math',days,sourceText:clean(phone[0])});
+      }
       if(wed||phone)continue;
     }
     const days=subjectDays(schedule,subject);if(!days.length)continue;
@@ -402,7 +411,7 @@ function parseExtractedDocument(doc,options={}){
   if(subjects.PAT&&(subjects.PAT.essential||subjects.PAT.url))parentInfo.push({day:'WEEK',title:'Plan de Acción Tutorial',text:subjects.PAT.essential||'Información para padres',url:subjects.PAT.url});
 
   const prep=buildPrep(subjects,schedule);
-  return {meta:{number:pasNumber,start,end,monthName,year,label:`PAS ${String(pasNumber).padStart(3,'0')}`,weekLabel:`${start}–${end} ${monthName}`,parserVersion:'0.2.4-rules-3'},week,assessments:quiz.assessments,parentInfo,subjects,prep,warnings,rawText:fullText};
+  return {meta:{number:pasNumber,start,end,monthName,year,label:`PAS ${String(pasNumber).padStart(3,'0')}`,weekLabel:`${start}–${end} ${monthName}`,parserVersion:'0.2.5-rules-1'},week,assessments:quiz.assessments,parentInfo,subjects,prep,warnings,rawText:fullText};
 }
 
 async function extractPdfFile(file,pdfjsLib){
@@ -425,11 +434,11 @@ global.PasParser={buildLines,parseExtractedDocument,extractPdfFile,parsePdfFile,
 </script>
 <script>
 const WEEK = [
-  {key:'MON', short:'LUN', shortEn:'MON', date:7, name:'Lunes', nameEn:'Monday'},
-  {key:'TUE', short:'MAR', shortEn:'TUE', date:8, name:'Martes', nameEn:'Tuesday'},
-  {key:'WED', short:'MIÉ', shortEn:'WED', date:9, name:'Miércoles', nameEn:'Wednesday'},
-  {key:'THU', short:'JUE', shortEn:'THU', date:10, name:'Jueves', nameEn:'Thursday'},
-  {key:'FRI', short:'VIE', shortEn:'FRI', date:11, name:'Viernes', nameEn:'Friday'}
+  {key:'MON', short:'LUN', shortEn:'MON', date:14, name:'Lunes', nameEn:'Monday'},
+  {key:'TUE', short:'MAR', shortEn:'TUE', date:15, name:'Martes', nameEn:'Tuesday'},
+  {key:'WED', short:'MIÉ', shortEn:'WED', date:16, name:'Miércoles', nameEn:'Wednesday'},
+  {key:'THU', short:'JUE', shortEn:'THU', date:17, name:'Jueves', nameEn:'Thursday'},
+  {key:'FRI', short:'VIE', shortEn:'FRI', date:18, name:'Viernes', nameEn:'Friday'}
 ];
 const SCHEDULE = {
  MON:[['7:00–7:50','Social Studies'],['7:50–8:40','Arts'],['8:40–9:40','Science'],['9:40–10:10','BREAK'],['10:10–11:10','English'],['11:10–12:10','Math'],['12:10–1:00','Social Studies'],['1:10–2:00','LUNCH'],['2:00–3:00','PEI']],
@@ -438,30 +447,24 @@ const SCHEDULE = {
  THU:[['7:00–7:50','PAT'],['7:50–8:40','Math'],['8:40–9:40','Chemistry'],['9:40–10:10','BREAK'],['10:10–11:10','Physical Education'],['11:10–12:10','English'],['12:10–1:00','Science'],['1:10–2:00','LUNCH'],['2:00–3:00','Spanish']],
  FRI:[['7:00–7:50','Philosophy'],['7:50–8:40','Physics'],['8:40–9:30','English'],['9:30–10:00','BREAK'],['10:00–10:50','DLL'],['10:50–11:40','Spanish'],['11:40–12:30','Math'],['12:30–1:15','LUNCH'],['1:15–2:00','Science']]
 };
-const ASSESSMENTS = [
- {day:'TUE',subject:'Math',topic:'Quiz de números reales.'},
- {day:'WED',subject:'Math',topic:'Quiz de irracionales en la recta numérica.'},
- {day:'THU',subject:'Lenguaje y literatura',topic:'El ensayo y el informe: estructura, elementos e intención comunicativa.'},
- {day:'FRI',subject:'English',topic:'Narrative tenses quiz (past simple, past continuous, past perfect).'}
-];
+const ASSESSMENTS = [];
 const PARENT_INFO=[
- {day:'WED',title:'Family Learning',text:'Curso presencial en el laboratorio de inglés de Aspaen La Fragua.'},
  {day:'WEEK',title:'Plan de Acción Tutorial',text:'Unidad #2: uso y cuidado de las cosas.',url:'https://pat.plandeformaciondaip.com/newsletter/secundaria/3-2'}
 ];
 const SUBJECTS={
  'PAT':{essential:'Unidad #2: uso y cuidado de las cosas.',extra:'Objetivo formativo: fomentar gratitud, responsabilidad y cuidado hacia los bienes personales y comunes.',url:'https://pat.plandeformaciondaip.com/newsletter/secundaria/3-2',urlLabel:'Newsletter para padres'},
- 'Religion':{essential:'La Voz de la conciencia',materials:'En clase se pone en escena el caso trabajado en clase.'},
+ 'Religion':{essential:'Libertad, moralidad y gracias',materials:'Taller de trabajo en clase.'},
  'Science':{},
- 'Social Studies':{essential:'Ver PAS 4'},
- 'Spanish':{essential:'Lectura en voz alta. Preguntas de comprensión lectora: nivel literal, inferencial y crítico-argumentativo. Estrategias de redacción. Cohesión y coherencia. Normas APA.',materials:'Columna de opinión: “Escribiendo con máquina” de Héctor A. Faciolince. Cuento: “El ladrón honrado” de Fiódor Dostoyevski.',studyLinks:[{label:'El ladrón honrado.pdf',url:'https://aspaeneduco.sharepoint.com/:b:/r/sites/Grado9A26-27/Documentos%20compartidos/General/Lenguaje%20y%20literatura/El%20ladr%C3%B3n%20honrado.pdf?d=w273ca922f60646e9a57a9fc069a6ddb4&csf=1&web=1&e=F6sgbs'},{label:'Escribiendo con máquinas.pdf',url:'https://aspaeneduco.sharepoint.com/:b:/r/sites/Grado9A26-27/Documentos%20compartidos/General/Lenguaje%20y%20literatura/Escribiendo%20con%20m%C3%A1quinas.pdf?d=w10e448668fd34ab6b3ff3502681644cb&csf=1&web=1&e=iwaIyG'}],reader:'“El ladrón honrado” de Fiódor Dostoyevski.'},
+ 'Social Studies':{essential:'Socialización actividad derechos fundamentales, revisión de compromisos elecciones gobierno escolar.'},
+ 'Spanish':{sourceLabel:'Lenguaje y literatura',project:'Consejo Estudiantil Electoral · Gobierno escolar',essential:'Lectura en voz alta. Preguntas de comprensión lectora: nivel literal, inferencial y crítico-argumentativo. Estrategias de redacción. Cohesión y coherencia. Normas APA. Neologismos, préstamos y extranjerismos.',materials:'Columna de opinión: “El festival Macondo” de Gonzalo Mallarino Flórez. Cuento: “El ladrón honrado” de Fiódor Dostoyevski.',studyLinks:[{label:'El Festival Macondo.pdf',url:'https://aspaeneduco.sharepoint.com/:b:/r/sites/Grado9A26-27/Documentos%20compartidos/General/Lenguaje%20y%20literatura/El%20Festival%20Macondo.pdf?d=w632c720f29224e53ae64804d9de99902&csf=1&web=1&e=duMsT6'},{label:'El ladrón honrado.pdf',url:'https://aspaeneduco.sharepoint.com/:b:/r/sites/Grado9A26-27/Documentos%20compartidos/General/Lenguaje%20y%20literatura/El%20ladr%C3%B3n%20honrado.pdf?d=w273ca922f60646e9a57a9fc069a6ddb4&csf=1&web=1&e=wXDGh7'}],reader:'“El ladrón honrado” de Fiódor Dostoyevski.'},
  'Arts':{project:'Consejo Estudiantil Electoral · Gobierno escolar',essential:'Unidad 1: Música que Cuenta la Historia.',materials:'Cuaderno de artes. Cartuchera.',studyLinks:[{label:'Historia de la música en breve',url:'https://www.youtube.com/watch?v=xTRj1X8Hd1s'},{label:'Historia de la música',url:'https://www.youtube.com/watch?v=jwGFjT3NGdI'}],extra:'Se realizará el trabajo rítmico visto la clase anterior, teniendo en cuenta la precisión con instrumentos del set preorquestal.'},
- 'Physical Education':{essential:'Aplicar técnicas de control viso-pédica con precisión durante el recorrido de circuitos individuales y grupales.',activity:'Realizar circuitos de conducción, control y pases, fortaleciendo la coordinación viso-pédica y precisión.',materials:'Uniforme de educación física completo.'},
- 'Math':{project:'Consejo Estudiantil Electoral · Gobierno escolar',essential:'Densidad, completitud, orden, trazos con lápiz y compás, análisis de datos agrupados, proyecto ABP y preparación de pruebas estandarizadas. Quiz de números reales y quiz de irracionales en la recta numérica.',materials:'Para el miércoles: compás, regla, escuadra, lápiz, borrador y hojas de dibujo técnico. Se necesita celular los lunes, jueves y viernes.',studyLinks:[{label:'Trazos con lápiz y compás',url:'https://www.youtube.com/watch?v=XLlVTTSuuCo&list=PLaHAKk46nWmKa-4yqUgc2bpeS_dVWgULX'},{label:'Irracionales en la recta numérica',url:'https://www.youtube.com/watch?v=e9E0XpWkFL8'},{label:'Tablas para datos agrupados',url:'https://www.youtube.com/playlist?list=PLeySRPnY35dFcEmQDGrPxwJVXiIeu_9cl'}]},
- 'English':{essential:'Narrative tenses — past simple/continuous vs past perfect — Adverbs of degree. Paraphrarsing IELTS workshop.',materials:'English and PEI notebooks',studyLinks:[{label:'Enlace de estudio',url:'https://tinyurl.com/44demwyz'}]},
- 'Novus A+':{essential:'Hablemos de métodos...',materials:'Cuaderno, lapiceros'},
+ 'Physical Education':{essential:'Valorar la cooperación y el respeto al compartir espacios de práctica, en el logro de objetivos motrices.',activity:'Realizar juegos y ejercicios grupales que fomenten la cooperación, el respeto y el logro de objetivos motrices comunes.',materials:'Uniforme de educación física completo.'},
+ 'Math':{project:'Consejo Estudiantil Electoral · Gobierno escolar',essential:'Problemas de conjuntos, potenciaciones de números reales, trazos con lápiz y compás, análisis de datos agrupados, proyecto ABP y preparación de pruebas estandarizadas.',materials:'Traer compás, regla, escuadra, lápiz, borrador y hojas de dibujo técnico para el miércoles. Se necesita celular el jueves y viernes.',studyLinks:[{label:'Trazos con lápiz y compás',url:'https://www.youtube.com/watch?v=XLlVTTSuuCo&list=PLaHAKk46nWmKa-4yqUgc2bpeS_dVWgULX'},{label:'Tablas para datos agrupados',url:'https://www.youtube.com/playlist?list=PLeySRPnY35dFcEmQDGrPxwJVXiIeu_9cl'}]},
+ 'English':{essential:'Present Perfect and Present Perfect Continuous. Reading IELTS workshop.',materials:'English and PEI notebooks',studyLinks:[{label:'Enlace de estudio',url:'https://tinyurl.com/44demwyz'}]},
+ 'Novus A+':{essential:'Conciencia sobre la fertilidad y toma de decisiones informada',materials:'Cuaderno, lapiceros, celular'},
  'DLL':{essential:'The Farmer Was Replaced.',activity:'Programación en python.',materials:'Actividades propias de la plataforma y cuaderno.',study:'Motores de búsqueda web.'},
- 'Philosophy':{essential:'El hombre, la polis y el Estado',studyLinks:[{label:'Marco Aurelio, el filósofo que no quería ser emperador',url:'https://filco.es/marco-aurelio-filosofo-no-queria-emperador/'}]},
- 'Physics':{essential:'Taller sobre vectores y MRUA',materials:'Cuaderno',studyLinks:[{label:'MRUA',url:'https://www.youtube.com/watch?v=H-oTHKik2Yo'}]},
+ 'Philosophy':{essential:'El rol del filósofo en la sociedad'},
+ 'Physics':{essential:'Operaciones con vectores: suma, resta, multiplicación por un escalar. Vector resultante (puede abordarse por métodos gráficos y/o algebraicos).',materials:'Cuaderno, regla, lápiz y colores',studyLinks:[{label:'Operaciones con vectores',url:'https://www.youtube.com/watch?v=HDMjW43HfRE&list=PLRcnRr_yNPRpD_lWhw5sBvPTjFgjcXzFz'}]},
  'Chemistry':{},
  'PEI':{}
 };
@@ -469,21 +472,23 @@ const PREP = [
  {id:'arts-kit',label:'Cuaderno de artes + cartuchera',days:['MON']},
  {id:'pe-uniform',label:'Uniforme completo de Educación Física',days:['TUE','THU']},
  {id:'english-pei-notebooks',label:'English + PEI notebooks',days:['MON','TUE','WED','THU','FRI']},
- {id:'math-phone',label:'Celular para Math',days:['MON','THU','FRI']},
+ {id:'religion-workshop',label:'Taller de trabajo en clase para Religion',days:['TUE']},
+ {id:'math-phone',label:'Celular para Math',days:['THU','FRI']},
  {id:'math-drawing-kit',label:'Kit Math: compás, regla, escuadra, lápiz, borrador y hojas de dibujo técnico',days:['WED']},
- {id:'spanish-texts',label:'Textos de Spanish: “Escribiendo con máquina” + “El ladrón honrado”',days:['TUE','WED','THU','FRI']},
+ {id:'spanish-texts',label:'Textos de Spanish: “El festival Macondo” + “El ladrón honrado”',days:['TUE','WED','THU','FRI']},
  {id:'novus-kit',label:'Cuaderno + lapiceros para Novus A+',days:['WED']},
- {id:'physics-notebook',label:'Cuaderno de Physics',days:['WED','FRI']},
+ {id:'novus-phone',label:'Celular para Novus A+',days:['WED']},
+ {id:'physics-materials',label:'Cuaderno + regla + lápiz + colores para Physics',days:['WED','FRI']},
  {id:'dll-materials',label:'Cuaderno + actividades de plataforma para DLL',days:['FRI']}
 ];
 const I18N={
- es:{student:'Estudiante',parents:'Padres',home:'Inicio',week:'Semana',schedule:'Horario',settings:'Configuración',language:'Idioma de interfaz',theme:'Color de la aplicación',themeOcean:'Turquesa',themeBlue:'Azul',themeViolet:'Violeta',activeSources:'Fuentes activas',weeklyPas:'PAS semanal',loadPas:'Cargar nuevo PAS',openLoadedPas:'Abrir PDF cargado',loadPasNote:'El nuevo PAS se carga aquí. En este HTML portátil el PDF queda guardado como fuente local, pero el contenido visible no cambia hasta que el parser lo procese.',sourceNote:'El PAS semanal prevalece sobre el horario general cuando exista contradicción.',sync:'Checklist',syncNote:'Los checks se guardan únicamente en este dispositivo. No existen cuentas ni sincronización entre dispositivos.',version:'Versión',today:'Hoy',important:'Importante',prepare:'Preparar',nextAssessment:'Próxima evaluación',thisWeek:'Esta semana',assessments:'Evaluaciones',forParents:'Para padres',pasOfDay:'PAS del día',classes:'Clases',noInfo:'Sin información adicional esta semana',sourcePas:'PAS 005 · 7–11 septiembre',weekTitle:'Semana 7–11 septiembre',tapDetails:'Toca una materia para ver detalle del PAS',essential:'Conocimientos esenciales',materials:'Materiales',activity:'Actividad',project:'Proyecto',study:'Recursos / estudio',reader:'Plan lector',more:'Información adicional',fullPas:'PAS por materias',open:'Abrir enlace',ready:'listos',generalSchedule:'Horario vigente · V3',break:'Descanso',lunch:'Almuerzo',noneToday:'No hay novedades específicas del PAS para este día.',schoolSource:'Información tomada del PAS semanal vigente.'},
- en:{student:'Student',parents:'Parents',home:'Home',week:'Week',schedule:'Schedule',settings:'Settings',language:'Interface language',theme:'App color',themeOcean:'Turquoise',themeBlue:'Blue',themeViolet:'Violet',activeSources:'Active sources',weeklyPas:'Weekly PAS',loadPas:'Load new PAS',openLoadedPas:'Open loaded PDF',loadPasNote:'Load the new PAS here. In this portable HTML the PDF is stored as a local source, but the visible content does not change until the parser processes it.',sourceNote:'The weekly PAS takes precedence over the general schedule when they conflict.',sync:'Checklist',syncNote:'Checks are stored only on this device. There are no accounts or cross-device synchronization.',version:'Version',today:'Today',important:'Important',prepare:'Prepare',nextAssessment:'Next assessment',thisWeek:'This week',assessments:'Assessments',forParents:'For parents',pasOfDay:'PAS for the day',classes:'Classes',noInfo:'No additional information this week',sourcePas:'PAS 005 · September 7–11',weekTitle:'September 7–11',tapDetails:'Tap a subject to see PAS details',essential:'Essential knowledge',materials:'Materials',activity:'Activity',project:'Project',study:'Resources / study',reader:'Reading plan',more:'Additional information',fullPas:'PAS by subject',open:'Open link',ready:'ready',generalSchedule:'Current schedule · V3',break:'Break',lunch:'Lunch',noneToday:'No specific PAS updates for this day.',schoolSource:'Information taken from the current weekly PAS.'}
+ es:{student:'Estudiante',parents:'Padres',home:'Inicio',week:'Semana',schedule:'Horario',settings:'Configuración',language:'Idioma de interfaz',theme:'Color de la aplicación',themeOcean:'Turquesa',themeBlue:'Azul',themeViolet:'Violeta',activeSources:'Fuentes activas',weeklyPas:'PAS semanal',loadPas:'Cargar nuevo PAS',openLoadedPas:'Abrir PDF cargado',loadPasNote:'El nuevo PAS se carga aquí. En este HTML portátil el PDF queda guardado como fuente local, pero el contenido visible no cambia hasta que el parser lo procese.',sourceNote:'El PAS semanal prevalece sobre el horario general cuando exista contradicción.',sync:'Checklist',syncNote:'Los checks se guardan únicamente en este dispositivo. No existen cuentas ni sincronización entre dispositivos.',version:'Versión',today:'Hoy',important:'Importante',prepare:'Preparar',nextAssessment:'Próxima evaluación',thisWeek:'Esta semana',assessments:'Evaluaciones',forParents:'Para padres',pasOfDay:'PAS del día',classes:'Clases',noInfo:'Sin información adicional esta semana',sourcePas:'PAS 006 · 14–18 septiembre',weekTitle:'Semana 14–18 septiembre',tapDetails:'Toca una materia para ver detalle del PAS',essential:'Conocimientos esenciales',materials:'Materiales',activity:'Actividad',project:'Proyecto',study:'Recursos / estudio',reader:'Plan lector',more:'Información adicional',fullPas:'PAS por materias',open:'Abrir enlace',ready:'listos',generalSchedule:'Horario vigente · V3',break:'Descanso',lunch:'Almuerzo',noneToday:'No hay novedades específicas del PAS para este día.',schoolSource:'Información tomada del PAS semanal vigente.'},
+ en:{student:'Student',parents:'Parents',home:'Home',week:'Week',schedule:'Schedule',settings:'Settings',language:'Interface language',theme:'App color',themeOcean:'Turquoise',themeBlue:'Blue',themeViolet:'Violet',activeSources:'Active sources',weeklyPas:'Weekly PAS',loadPas:'Load new PAS',openLoadedPas:'Open loaded PDF',loadPasNote:'Load the new PAS here. In this portable HTML the PDF is stored as a local source, but the visible content does not change until the parser processes it.',sourceNote:'The weekly PAS takes precedence over the general schedule when they conflict.',sync:'Checklist',syncNote:'Checks are stored only on this device. There are no accounts or cross-device synchronization.',version:'Version',today:'Today',important:'Important',prepare:'Prepare',nextAssessment:'Next assessment',thisWeek:'This week',assessments:'Assessments',forParents:'For parents',pasOfDay:'PAS for the day',classes:'Classes',noInfo:'No additional information this week',sourcePas:'PAS 006 · September 14–18',weekTitle:'September 14–18',tapDetails:'Tap a subject to see PAS details',essential:'Essential knowledge',materials:'Materials',activity:'Activity',project:'Project',study:'Resources / study',reader:'Reading plan',more:'Additional information',fullPas:'PAS by subject',open:'Open link',ready:'ready',generalSchedule:'Current schedule · V3',break:'Break',lunch:'Lunch',noneToday:'No specific PAS updates for this day.',schoolSource:'Information taken from the current weekly PAS.'}
 };
 let state={role:localStorage.getItem('pas-role')||'student',lang:localStorage.getItem('pas-lang')||'es',theme:localStorage.getItem('pas-theme')||'ocean',page:'home',day:'MON',checks:{}};
 function applyTheme(){document.documentElement.dataset.theme=state.theme;document.querySelectorAll('[data-theme-choice]').forEach(b=>b.classList.toggle('active',b.dataset.themeChoice===state.theme));const colors={ocean:'#0d7f8e',blue:'#315fba',violet:'#7454a8'};document.querySelector('meta[name="theme-color"]')?.setAttribute('content',colors[state.theme]||colors.ocean)}
 applyTheme();
-try{state.checks=JSON.parse(localStorage.getItem('pas-checks-005')||'{}')}catch(e){state.checks={}}
+try{state.checks=JSON.parse(localStorage.getItem('pas-checks-006')||'{}')}catch(e){state.checks={}}
 function t(k){return I18N[state.lang][k]||k}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function dayObj(k){return WEEK.find(d=>d.key===k)}
@@ -520,7 +525,7 @@ state.day=todayKey();
 function renderHome(){const el=document.getElementById('homePage');const day=state.day;const d=dayObj(day);const exams=ASSESSMENTS;const todayPrep=prepFor(day);const next=exams.find(a=>WEEK.findIndex(x=>x.key===a.day)>=WEEK.findIndex(x=>x.key===day))||exams[0];
  if(state.role==='student'){
   el.innerHTML=`<div class="eyebrow">${t('sourcePas')}</div><h1 class="h1">${t('today')}: ${dayLabel(day)} ${d.date}</h1><p class="sub">${t('schoolSource')}</p>
-  <div class="hero"><div class="small">PAS 005 · 9°A</div><h2>${t('important')}</h2><p>${next?`${shortDay(next.day)} · ${esc(next.subject)} — ${esc(next.topic)}`:t('noneToday')}</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${PREP.length} ${t('prepare').toLowerCase()}</span></div></div>
+  <div class="hero"><div class="small">PAS 006 · 9°A</div><h2>${t('important')}</h2><p>${next?`${shortDay(next.day)} · ${esc(next.subject)} — ${esc(next.topic)}`:t('noneToday')}</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${PREP.length} ${t('prepare').toLowerCase()}</span></div></div>
   <div class="desktop-2"><div>
   <div class="section"><div class="section-head"><h3>${t('today')}</h3><span class="meta">${dayLabel(day)} ${d.date}</span></div>${renderTodayClasses(day)}</div>
   </div><div>
@@ -530,7 +535,7 @@ function renderHome(){const el=document.getElementById('homePage');const day=sta
  } else {
   const done=PREP.filter(i=>state.checks[i.id]).length;
   el.innerHTML=`<div class="eyebrow">${t('sourcePas')}</div><h1 class="h1">${t('weekTitle')}</h1><p class="sub">Una sola vista con lo importante del PAS para acompañar la semana.</p>
-  <div class="hero"><div class="small">PAS 005 · 9°A</div><h2>${t('thisWeek')}</h2><p>Family Learning · miércoles 9 · Laboratorio de inglés</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${PREP.length-done} pendientes de preparar</span></div></div>
+  <div class="hero"><div class="small">PAS 006 · 9°A</div><h2>${t('thisWeek')}</h2><p>Plan de Acción Tutorial · Unidad #2 uso y cuidado de las cosas</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${PREP.length-done} pendientes de preparar</span></div></div>
   <div class="stats"><div class="stat"><b>${ASSESSMENTS.length}</b><span>${t('assessments')}</span></div><div class="stat"><b>${PREP.length-done}</b><span>Pendientes</span></div><div class="stat"><b>${PARENT_INFO.filter(x=>x.day!=='WEEK').length}</b><span>Evento familiar</span></div></div>
   <div class="desktop-2"><div>
     <div class="section"><div class="section-head"><h3>${t('assessments')}</h3><span class="meta">PAS semanal</span></div>${ASSESSMENTS.map(assessmentCard).join('')}</div>
@@ -548,13 +553,13 @@ function renderWeek(){const el=document.getElementById('weekPage');const d=dayOb
  let focus=[];a.forEach(x=>focus.push(`<div class="focus-item"><div class="k">${t('assessments')} · ${esc(x.subject)}</div><div class="v">${esc(x.topic)}</div></div>`));p.forEach(x=>focus.push(`<div class="focus-item"><div class="k">${t('prepare')}</div><div class="v">${esc(x.label)}</div></div>`));parent.forEach(x=>focus.push(`<div class="focus-item"><div class="k">${t('forParents')}</div><div class="v">${esc(x.title)} · ${esc(x.text)}</div></div>`));
  el.innerHTML=`<div class="eyebrow">${t('sourcePas')}</div><h1 class="h1">${t('week')}</h1><p class="sub">${t('tapDetails')}</p>
  <div class="days">${WEEK.map(x=>`<button class="daybtn ${x.key===state.day?'active':''}" data-day="${x.key}"><b>${state.lang==='es'?x.short:x.shortEn}</b><span>${x.date}</span></button>`).join('')}</div>
- <div class="section"><div class="section-head"><h3>${t('pasOfDay')} · ${dayLabel(state.day)} ${d.date}</h3><span class="meta">PAS 005</span></div><div class="card pas-focus">${focus.length?focus.join(''):`<div class="focus-item"><div class="v">${t('noneToday')}</div></div>`}</div></div>
+ <div class="section"><div class="section-head"><h3>${t('pasOfDay')} · ${dayLabel(state.day)} ${d.date}</h3><span class="meta">PAS 006</span></div><div class="card pas-focus">${focus.length?focus.join(''):`<div class="focus-item"><div class="v">${t('noneToday')}</div></div>`}</div></div>
  <div class="section"><div class="section-head"><h3>${t('classes')}</h3><span class="meta">Horario V3</span></div>${renderTodayClasses(state.day)}</div>
  <div class="section"><div class="section-head"><h3>${t('fullPas')}</h3><span class="meta">${Object.keys(SUBJECTS).length} materias</span></div>${Object.keys(SUBJECTS).filter(s=>Object.keys(SUBJECTS[s]).length).map(s=>`<details class="subject-card"><summary class="subject-trigger"><div><b>${esc(s)}</b><small>${esc((SUBJECTS[s].essential||SUBJECTS[s].activity||SUBJECTS[s].materials||'').slice(0,90))}${(SUBJECTS[s].essential||SUBJECTS[s].activity||SUBJECTS[s].materials||'').length>90?'…':''}</small></div><span class="chev" aria-hidden="true">⌄</span></summary><div class="subject-body">${renderSubjectDetails(s,'NONE')}</div></details>`).join('')}</div>`;
  bindWeek();
 }
 function renderSchedule(){const el=document.getElementById('schedulePage');el.innerHTML=`<div class="eyebrow">${t('generalSchedule')}</div><h1 class="h1">9°A</h1><p class="sub">El horario permanece vigente hasta que el colegio publique una nueva versión. El PAS semanal tiene prioridad cuando exista contradicción.</p><div class="section schedule-grid">${WEEK.map(d=>`<div class="schedule-day card"><h3 class="schedule-title">${state.lang==='es'?d.name:d.nameEn}</h3>${SCHEDULE[d.key].map(([time,sub])=>`<div class="slot ${(sub==='BREAK'||sub==='LUNCH')?'break':''}"><div class="st">${time}</div><div class="ss">${sub==='BREAK'?t('break'):sub==='LUNCH'?t('lunch'):esc(sub)}</div></div>`).join('')}</div>`).join('')}</div>`}
-function bindChecks(){document.querySelectorAll('[data-check]').forEach(row=>{row.onclick=()=>{const id=row.dataset.check;state.checks[id]=!state.checks[id];localStorage.setItem('pas-checks-005',JSON.stringify(state.checks));renderCurrent()}})}
+function bindChecks(){document.querySelectorAll('[data-check]').forEach(row=>{row.onclick=()=>{const id=row.dataset.check;state.checks[id]=!state.checks[id];localStorage.setItem('pas-checks-006',JSON.stringify(state.checks));renderCurrent()}})}
 function bindWeek(){document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{state.day=b.dataset.day;renderWeek()});bindChecks()}
 function renderCurrent(){applyTheme();if(state.role==='parent')state.page='home';document.getElementById('app').classList.toggle('role-student',state.role==='student');document.getElementById('app').classList.toggle('role-parent',state.role==='parent');document.querySelectorAll('[data-role]').forEach(b=>b.classList.toggle('active',b.dataset.role===state.role));document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.dataset.i18n;if(I18N[state.lang][key])el.textContent=I18N[state.lang][key]});document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===state.lang));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===state.page));document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.nav===state.page));
  if(state.page==='home')renderHome();else if(state.page==='week')renderWeek();else renderSchedule()}
@@ -563,7 +568,7 @@ document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{state.page=b.d
 const drawer=document.getElementById('drawerBack');document.getElementById('settingsBtn').onclick=()=>drawer.classList.add('open');document.getElementById('closeDrawer').onclick=()=>drawer.classList.remove('open');drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.classList.remove('open')});
 document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{state.lang=b.dataset.lang;localStorage.setItem('pas-lang',state.lang);renderCurrent()});
 document.querySelectorAll('[data-theme-choice]').forEach(b=>b.onclick=()=>{state.theme=b.dataset.themeChoice;localStorage.setItem('pas-theme',state.theme);applyTheme();});
-window.addEventListener('storage',e=>{if(e.key==='pas-checks-005'){try{state.checks=JSON.parse(e.newValue||'{}');renderCurrent()}catch(_){}}});
+window.addEventListener('storage',e=>{if(e.key===checkStorageKey()){try{state.checks=JSON.parse(e.newValue||'{}');renderCurrent()}catch(_){}}});
 
 // Fuente PAS semanal: el punto de carga vive en Configuración, no como una pantalla adicional.
 const PAS_DB='pas-family-files-v1', PAS_STORE='files', PAS_KEY='weekly-pas';
@@ -571,11 +576,14 @@ function pasDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(
 async function savePasBlob(file){const db=await pasDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PAS_STORE,'readwrite');tx.objectStore(PAS_STORE).put({id:PAS_KEY,name:file.name,size:file.size,type:file.type||'application/pdf',savedAt:new Date().toISOString(),blob:file});tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
 async function getPasBlob(){const db=await pasDb();return new Promise((resolve,reject)=>{const tx=db.transaction(PAS_STORE,'readonly');const req=tx.objectStore(PAS_STORE).get(PAS_KEY);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)})}
 function fmtBytes(n){return n<1024?`${n} B`:n<1024*1024?`${(n/1024).toFixed(1)} KB`:`${(n/1024/1024).toFixed(1)} MB`}
-async function refreshPasUploadStatus(){const box=document.getElementById('pasUploadStatus'),actions=document.getElementById('pasUploadActions');if(!box||!actions)return;try{const x=await getPasBlob();if(x){box.innerHTML=`<b>PDF cargado localmente:</b><br>${esc(x.name)} · ${fmtBytes(x.size)}<br><span style="color:#9a6b17">Pendiente de procesamiento; PAS activo visible: PAS 005.</span>`;actions.style.display='flex'}else{box.innerHTML='<b>PAS activo:</b> PAS 005 · 7–11 septiembre';actions.style.display='none'}}catch(e){box.innerHTML='<b>PAS activo:</b> PAS 005 · 7–11 septiembre';actions.style.display='none'}}
+async function refreshPasUploadStatus(){const box=document.getElementById('pasUploadStatus'),actions=document.getElementById('pasUploadActions');if(!box||!actions)return;try{const x=await getPasBlob();if(x){box.innerHTML=`<b>PDF cargado localmente:</b><br>${esc(x.name)} · ${fmtBytes(x.size)}<br><span style="color:#9a6b17">Pendiente de procesamiento; PAS activo visible: PAS 006.</span>`;actions.style.display='flex'}else{box.innerHTML='<b>PAS activo:</b> PAS 006 · 14–18 septiembre';actions.style.display='none'}}catch(e){box.innerHTML='<b>PAS activo:</b> PAS 006 · 14–18 septiembre';actions.style.display='none'}}
 const pasInput=document.getElementById('pasFileInput');document.getElementById('pasUploadBtn')?.addEventListener('click',()=>pasInput?.click());pasInput?.addEventListener('change',async()=>{const file=pasInput.files?.[0];if(!file)return;if(file.type&&file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf')){alert('Selecciona un archivo PDF.');return}try{await savePasBlob(file);await refreshPasUploadStatus()}catch(e){alert('No fue posible guardar el PDF en este navegador.')}});document.getElementById('openUploadedPas')?.addEventListener('click',async()=>{const x=await getPasBlob();if(!x?.blob)return;const u=URL.createObjectURL(x.blob);window.open(u,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(u),60000)});
-// ===== v0.2.3 overrides: G4 changes + weekly PAS parser/activation =====
-const APP_VERSION='0.2.4';
-let activePasMeta={number:5,start:7,end:11,monthName:'septiembre',year:2026,label:'PAS 005',weekLabel:'7–11 septiembre',parserVersion:'embedded-baseline'};
+// ===== v0.2.5 overrides: weekly PAS parser/activation + PAS006 baseline =====
+const APP_VERSION='0.2.5';
+const EMBEDDED_PAS_NUMBER=6;
+const ACTIVE_PAS_STORAGE_KEY='pas-active-data-v025';
+const LEGACY_ACTIVE_PAS_STORAGE_KEY='pas-active-data-v024';
+let activePasMeta={number:6,start:14,end:18,monthName:'septiembre',year:2026,label:'PAS 006',weekLabel:'14–18 septiembre',parserVersion:'embedded-baseline-v025'};
 let pendingPas=null,pendingPasFile=null;
 
 Object.assign(I18N.es,{loadPas:'Seleccionar PDF',openLoadedPas:'Abrir PDF',loadPasNote:'En Android con la PWA instalada también puedes usar WhatsApp → Compartir → PAS Family Planner. El PDF se analiza primero y tú decides si lo activas.',sourcePas:'PAS semanal'});
@@ -584,7 +592,7 @@ Object.assign(I18N.en,{loadPas:'Select PDF',openLoadedPas:'Open PDF',loadPasNote
 // Fix canonical assessment while preserving the literal source label.
 ASSESSMENTS.forEach(a=>{if(a.subject==='Lenguaje y literatura'){a.sourceLabel='Lenguaje y literatura';a.subject='Spanish'}else if(!a.sourceLabel)a.sourceLabel=a.subject});
 const PREP_SUBJECTS={
- 'arts-kit':'Arts','pe-uniform':'Physical Education','english-pei-notebooks':'English','math-phone':'Math','math-drawing-kit':'Math','spanish-texts':'Spanish','novus-kit':'Novus A+','physics-notebook':'Physics','dll-materials':'DLL'
+ 'arts-kit':'Arts','pe-uniform':'Physical Education','english-pei-notebooks':'English','religion-workshop':'Religion','math-phone':'Math','math-drawing-kit':'Math','spanish-texts':'Spanish','novus-kit':'Novus A+','novus-phone':'Novus A+','physics-notebook':'Physics','physics-materials':'Physics','dll-materials':'DLL'
 };
 PREP.forEach(p=>{if(!p.subject)p.subject=PREP_SUBJECTS[p.id]||null});
 
@@ -650,13 +658,20 @@ function ensureScheduleSubjects(subjects){for(const d of Object.keys(SCHEDULE))f
 function applyParsedPas(parsed,persist=true){
  const subjects=JSON.parse(JSON.stringify(parsed.subjects||{}));ensureScheduleSubjects(subjects);
  replaceArray(WEEK,parsed.week||WEEK);replaceArray(ASSESSMENTS,parsed.assessments||[]);replaceArray(PARENT_INFO,parsed.parentInfo||[]);replaceArray(PREP,parsed.prep||[]);replaceObject(SUBJECTS,subjects);activePasMeta={...parsed.meta};
- if(persist)localStorage.setItem('pas-active-data-v024',JSON.stringify({meta:activePasMeta,week:WEEK,assessments:ASSESSMENTS,parentInfo:PARENT_INFO,prep:PREP,subjects:SUBJECTS}));
+ if(persist)localStorage.setItem(ACTIVE_PAS_STORAGE_KEY,JSON.stringify({meta:activePasMeta,week:WEEK,assessments:ASSESSMENTS,parentInfo:PARENT_INFO,prep:PREP,subjects:SUBJECTS}));
  try{state.checks=JSON.parse(localStorage.getItem(checkStorageKey())||'{}')}catch(_){state.checks={}}
  state.day=todayKey();updateSourceBadges();renderCurrent();
 }
-function restoreActivePas(){try{const x=JSON.parse(localStorage.getItem('pas-active-data-v024')||'null');if(x?.meta)applyParsedPas(x,false)}catch(_){}}
+function restoreActivePas(){
+ try{
+  const current=JSON.parse(localStorage.getItem(ACTIVE_PAS_STORAGE_KEY)||'null');
+  if(current?.meta?.number>=EMBEDDED_PAS_NUMBER){applyParsedPas(current,false);return}
+  const legacy=JSON.parse(localStorage.getItem(LEGACY_ACTIVE_PAS_STORAGE_KEY)||'null');
+  if(legacy?.meta?.number>=EMBEDDED_PAS_NUMBER)applyParsedPas(legacy,false);
+ }catch(_){}
+}
 
-function updateSourceBadges(){const b=document.getElementById('activePasBadge');if(b)b.textContent=activePasMeta.label;const v=document.getElementById('versionText');if(v)v.textContent=`PAS Family Planner · v${APP_VERSION} · 07/09/2026`}
+function updateSourceBadges(){const b=document.getElementById('activePasBadge');if(b)b.textContent=activePasMeta.label;const v=document.getElementById('versionText');if(v)v.textContent=`PAS Family Planner · v${APP_VERSION} · 13/09/2026`}
 
 function previewHtml(parsed,file,isShared=false){const w=parsed.warnings||[];return `<div class="preview-title">${isShared?'NUEVO PAS RECIBIDO':'Nuevo PAS detectado'}</div><div class="preview-week">${esc(parsed.meta.label)} · ${esc(parsed.meta.weekLabel)}</div><div class="preview-grid"><div><b>${parsed.assessments.length}</b><span>Evaluaciones</span></div><div><b>${parsed.prep.length}</b><span>Materiales</span></div><div><b>${Object.values(parsed.subjects).reduce((n,s)=>n+(s.studyLinks?.length||0),0)}</b><span>Enlaces</span></div><div><b>${parsed.parentInfo.length}</b><span>Avisos</span></div></div>${w.length?`<div class="preview-warning">Warnings / REVIEW_REQUIRED: ${esc(w.join(', '))}</div>`:`<div class="preview-ok">Validación automática sin alertas.</div>`}<div class="tiny" style="margin-top:7px">${esc(file?.name||'PDF compartido')}</div>`}
 function showPasPreview(parsed,file,isShared=false){pendingPas=parsed;pendingPasFile=file;const p=document.getElementById('pasPreview'),actions=document.getElementById('pasPreviewActions');if(p){p.innerHTML=previewHtml(parsed,file,isShared);p.style.display='block'}if(actions)actions.style.display='flex';const box=document.getElementById('pasUploadStatus');if(box)box.innerHTML=`<b>Analizado:</b> ${esc(parsed.meta.label)} · ${esc(parsed.meta.weekLabel)}<br><span style="color:var(--ok)">Listo para revisar y activar.</span>`}
@@ -680,7 +695,7 @@ async function readSharedPas(){
 
 // Load persisted active PAS if one was already activated in this browser.
 restoreActivePas();
-try{state.checks=JSON.parse(localStorage.getItem(checkStorageKey())||localStorage.getItem('pas-checks-005')||'{}')}catch(_){state.checks={}}
+try{state.checks=JSON.parse(localStorage.getItem(checkStorageKey())||'{}')}catch(_){state.checks={}}
 state.day=todayKey();updateSourceBadges();
 if(location.search.includes('shared=1'))setTimeout(readSharedPas,100);
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker no registrado',err)));}

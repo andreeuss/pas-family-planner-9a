@@ -2,6 +2,8 @@
 
 Planeador semanal para familias de 9°A. La aplicación funciona como un sitio web instalable (PWA), procesa los PDF PAS localmente en el dispositivo y no usa cuentas, analítica ni servicios externos.
 
+Versión publicada: **v0.2.5**. Baseline público: **PAS 006 · 14–18 septiembre de 2026**.
+
 ## Cómo usarlo
 
 Abre la aplicación y elige **Estudiante** o **Padres**. El selector solo cambia la presentación. En Estudiante están Inicio, Semana y Horario; Padres muestra un único resumen semanal. Los checks se guardan únicamente en el navegador actual.
