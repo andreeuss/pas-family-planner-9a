@@ -1,4 +1,5 @@
-const CACHE_NAME = 'pas-family-v0.2.5';
+const CACHE_NAME = 'pas-family-v0.2.5.1';
+const HOTFIX_SCRIPT = './hotfix-0.2.5.1.js';
 const APP_SHELL = [
   './',
   './index.html',
@@ -7,7 +8,8 @@ const APP_SHELL = [
   './assets/pdf.worker.min.mjs',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/maskable-512.png'
+  './icons/maskable-512.png',
+  HOTFIX_SCRIPT
 ];
 const SHARE_DB = 'pas-family-share-v1';
 const SHARE_STORE = 'inbox';
@@ -76,6 +78,21 @@ async function receiveShare(request) {
   }
 }
 
+async function injectHotfix(response) {
+  if (!response) return response;
+  try {
+    const html = await response.text();
+    const tag = '<script src="./hotfix-0.2.5.1.js"></script>';
+    const patched = html.includes('hotfix-0.2.5.1.js') ? html : html.replace(/<\/body>/i, `${tag}\n</body>`);
+    const headers = new Headers(response.headers);
+    headers.set('Content-Type', 'text/html; charset=utf-8');
+    headers.delete('Content-Length');
+    return new Response(patched, { status: response.status, statusText: response.statusText, headers });
+  } catch (_) {
+    return response;
+  }
+}
+
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const shareUrl = new URL('./share-target', self.registration.scope);
@@ -85,7 +102,13 @@ self.addEventListener('fetch', event => {
   }
   if (event.request.method !== 'GET') return;
   if (event.request.mode === 'navigate') {
-    event.respondWith(fetch(event.request).catch(() => caches.match('./index.html')));
+    event.respondWith((async () => {
+      try {
+        return await injectHotfix(await fetch(event.request));
+      } catch (_) {
+        return injectHotfix(await caches.match('./index.html'));
+      }
+    })());
     return;
   }
   if (url.origin === self.location.origin) {
