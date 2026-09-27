@@ -100,7 +100,7 @@ body{min-height:100vh}
   <div class="setting"><label data-i18n="activeSources">Fuentes activas</label><div><span class="source-badge">Horario V3</span><span class="source-badge" id="activePasBadge">PAS 006</span></div><p class="tiny" data-i18n="sourceNote">El PAS semanal prevalece sobre el horario general cuando exista contradicción.</p></div>
   <div class="setting"><label data-i18n="weeklyPas">PAS semanal</label><div class="pas-upload"><div class="share-tip"><b>Actualizar PAS</b>En Android con la PWA instalada: desde WhatsApp toca <b style="display:inline">Compartir → PAS Family Planner</b>. Como respaldo, selecciónalo aquí.</div><input id="pasFileInput" type="file" accept="application/pdf,.pdf" hidden><button class="upload-btn" id="pasUploadBtn" type="button"><span>＋</span><span data-i18n="loadPas">Seleccionar PDF</span></button><div class="upload-status" id="pasUploadStatus"><b>PAS activo:</b> PAS 006 · 14–18 septiembre</div><div class="pas-preview" id="pasPreview" style="display:none"></div><div class="upload-actions" id="pasPreviewActions" style="display:none"><button class="mini-btn primary-mini" id="activatePasBtn" type="button">Activar PAS</button><button class="mini-btn danger-mini" id="discardPasBtn" type="button">Descartar</button></div><div class="upload-actions" id="pasUploadActions" style="display:none"><button class="mini-btn" id="openUploadedPas" type="button" data-i18n="openLoadedPas">Abrir PDF</button></div><p class="tiny" data-i18n="loadPasNote">El PDF se analiza primero. Verás un resumen antes de activarlo; si hay ambigüedades, la aplicación las marca para revisión.</p></div></div>
   <div class="setting"><label data-i18n="sync">Checklist</label><p class="tiny" data-i18n="syncNote">En este HTML portátil, los checks se guardan en este navegador. La sincronización entre celulares requiere conectar el backend compartido al publicar la PWA.</p></div>
-  <div class="setting"><label data-i18n="version">Versión</label><p class="tiny" id="versionText">PAS Family Planner · v0.2.5 · 13/09/2026</p></div>
+  <div class="setting"><label data-i18n="version">Versión</label><p class="tiny" id="versionText">PAS Family Planner · v0.2.5.4 · 26/09/2026</p></div>
 </aside></div>
 
 <script>window.pdfjsReady=import("./assets/pdf.min.mjs").then(m=>{window.pdfjsLib=m;return m});</script>
@@ -395,10 +395,10 @@ function parseExtractedDocument(doc,options={}){
   const schedule=options.schedule||{}, year=options.year||new Date().getFullYear();
   const pages=(doc.pages||[]).map((p,i)=>({...p,index:i,lines:buildLines(p.items||[],2.6)}));
   const fullText=pages.map(p=>p.lines.map(l=>l.text).join('\n')).join('\n');
-  const weekMatch=fullText.match(/PAS\s*(\d+)\s*:\s*(\d{1,2})\s+al\s+(\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúÑñ]+)/i);
+  const weekMatch=fullText.match(/PAS\s*(\d+)\s*:\s*(?:Semana\s+del\s+)?(\d{1,2})(?:\s+de\s+([A-Za-zÁÉÍÓÚáéíóúÑñ]+))?\s+al\s+(\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúÑñ]+)/i);
   if(!weekMatch)throw new Error('No se pudo identificar número y rango semanal del PAS.');
-  const pasNumber=Number(weekMatch[1]),start=Number(weekMatch[2]),end=Number(weekMatch[3]),monthName=norm(weekMatch[4]);
-  const week=buildWeek(start,end,monthName,year);if(!week)throw new Error('Mes del PAS no reconocido.');
+  const pasNumber=Number(weekMatch[1]),start=Number(weekMatch[2]),startMonthName=norm(weekMatch[3]||weekMatch[5]),end=Number(weekMatch[4]),endMonthName=norm(weekMatch[5]),monthName=startMonthName;
+  const week=buildWeek(start,end,startMonthName,year);if(!week)throw new Error('Mes del PAS no reconocido.');
   const sectionResult=parseSubjectSections(pages),subjects=sectionResult.subjects;
   parsePat(fullText,subjects);
   associateLinks(pages,sectionResult.anchorMap,sectionResult.carryMap,subjects);
@@ -411,7 +411,8 @@ function parseExtractedDocument(doc,options={}){
   if(subjects.PAT&&(subjects.PAT.essential||subjects.PAT.url))parentInfo.push({day:'WEEK',title:'Plan de Acción Tutorial',text:subjects.PAT.essential||'Información para padres',url:subjects.PAT.url});
 
   const prep=buildPrep(subjects,schedule);
-  return {meta:{number:pasNumber,start,end,monthName,year,label:`PAS ${String(pasNumber).padStart(3,'0')}`,weekLabel:`${start}–${end} ${monthName}`,parserVersion:'0.2.5-rules-1'},week,assessments:quiz.assessments,parentInfo,subjects,prep,warnings,rawText:fullText};
+  const weekLabel=startMonthName===endMonthName?`${start}–${end} ${startMonthName}`:`${start} ${startMonthName}–${end} ${endMonthName}`;
+  return {meta:{number:pasNumber,start,end,monthName:startMonthName,endMonthName,year,label:`PAS ${String(pasNumber).padStart(3,'0')}`,weekLabel,parserVersion:'0.2.5.4-rules-2'},week,assessments:quiz.assessments,parentInfo,subjects,prep,warnings,rawText:fullText};
 }
 
 async function extractPdfFile(file,pdfjsLib){
@@ -579,7 +580,7 @@ function fmtBytes(n){return n<1024?`${n} B`:n<1024*1024?`${(n/1024).toFixed(1)} 
 async function refreshPasUploadStatus(){const box=document.getElementById('pasUploadStatus'),actions=document.getElementById('pasUploadActions');if(!box||!actions)return;try{const x=await getPasBlob();if(x){box.innerHTML=`<b>PDF cargado localmente:</b><br>${esc(x.name)} · ${fmtBytes(x.size)}<br><span style="color:#9a6b17">Pendiente de procesamiento; PAS activo visible: PAS 006.</span>`;actions.style.display='flex'}else{box.innerHTML='<b>PAS activo:</b> PAS 006 · 14–18 septiembre';actions.style.display='none'}}catch(e){box.innerHTML='<b>PAS activo:</b> PAS 006 · 14–18 septiembre';actions.style.display='none'}}
 const pasInput=document.getElementById('pasFileInput');document.getElementById('pasUploadBtn')?.addEventListener('click',()=>pasInput?.click());pasInput?.addEventListener('change',async()=>{const file=pasInput.files?.[0];if(!file)return;if(file.type&&file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf')){alert('Selecciona un archivo PDF.');return}try{await savePasBlob(file);await refreshPasUploadStatus()}catch(e){alert('No fue posible guardar el PDF en este navegador.')}});document.getElementById('openUploadedPas')?.addEventListener('click',async()=>{const x=await getPasBlob();if(!x?.blob)return;const u=URL.createObjectURL(x.blob);window.open(u,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(u),60000)});
 // ===== v0.2.5 overrides: weekly PAS parser/activation + PAS006 baseline =====
-const APP_VERSION='0.2.5';
+const APP_VERSION='0.2.5.4';
 const EMBEDDED_PAS_NUMBER=6;
 const ACTIVE_PAS_STORAGE_KEY='pas-active-data-v025';
 const LEGACY_ACTIVE_PAS_STORAGE_KEY='pas-active-data-v024';
@@ -698,6 +699,14 @@ restoreActivePas();
 try{state.checks=JSON.parse(localStorage.getItem(checkStorageKey())||'{}')}catch(_){state.checks={}}
 state.day=todayKey();updateSourceBadges();
 if(location.search.includes('shared=1'))setTimeout(readSharedPas,100);
+if(location.search.includes('share_missing=1'))setTimeout(()=>{
+  drawer.classList.add('open');
+  const box=document.getElementById('pasUploadStatus');
+  if(box)box.innerHTML='<b>El correo abrió PAS Family Planner, pero Android no entregó el archivo PDF.</b><br>Para continuar, toca <b>Seleccionar PDF</b> y elige el PAS guardado en tu celular.';
+  const btn=document.getElementById('pasUploadBtn');
+  if(btn){btn.scrollIntoView({block:'center',behavior:'smooth'});btn.focus();}
+  try{history.replaceState({},'',location.pathname+location.hash)}catch(_){}
+},180);
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker no registrado',err)));}
 
 
