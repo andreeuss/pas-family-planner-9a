@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#0d7f8e" />
+<meta name="theme-color" content="#176B5B" />
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="icon" href="./icons/icon-192.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -64,6 +64,44 @@ body{min-height:100vh}
 .primary-mini{border-color:var(--brand)!important;background:var(--brand)!important;color:white!important}.danger-mini{color:var(--danger)!important}
 @media(max-width:360px){.iconbtn{width:44px;height:44px}.preview-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
+<style id="v26-ui">
+/* PAS Family Planner V 2.6 — visual refresh */
+:root, :root[data-theme="ocean"]{
+  --brand:#176B5B;--brand2:#247D6B;--brandSoft:#EAF7F3;--brandRgb:23,107,91;
+  --appBg:#F8FBFA;--pageBg:#EDF5F2;
+}
+.swatch.ocean{background:#176B5B!important}
+.iconbtn{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
+.release-badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:var(--brandSoft);color:var(--brand);border:1px solid rgba(var(--brandRgb),.22);padding:6px 9px;font-size:11px;font-weight:900;white-space:nowrap}
+.parent-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.parent-hero{background:linear-gradient(145deg,var(--brand),var(--brand2));color:white;border-radius:26px;padding:20px;margin:16px 0;box-shadow:0 16px 36px rgba(var(--brandRgb),.20);position:relative;overflow:hidden}
+.parent-hero:after{content:"";position:absolute;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.08);right:-60px;top:-70px}
+.parent-hero .small{font-size:12px;font-weight:800;opacity:.86;position:relative;z-index:1}
+.parent-hero h2{font-size:23px;line-height:1.15;margin:8px 0 5px;letter-spacing:-.5px;position:relative;z-index:1}
+.parent-hero p{font-size:13px;line-height:1.5;margin:0;max-width:560px;opacity:.94;position:relative;z-index:1}
+.parent-week-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.parent-day{background:white;border:1px solid var(--line);border-radius:14px;padding:10px 7px;min-width:0;text-align:center}
+.parent-day.current{border-color:var(--brand);box-shadow:0 0 0 2px var(--brandSoft)}
+.parent-day b{display:block;font-size:11px;color:var(--brand)}
+.parent-day strong{display:block;font-size:18px;margin:2px 0 5px}
+.parent-day .signal{display:block;font-size:10px;line-height:1.25;color:var(--muted);font-weight:700;overflow-wrap:anywhere}
+.parent-day .signal.hot{color:#8a530b}
+.parent-callout{border:1px solid rgba(var(--brandRgb),.18);background:linear-gradient(180deg,var(--brandSoft),#fff);border-radius:18px;padding:14px}
+.parent-callout .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--brand);font-weight:900}
+.parent-callout .v{font-size:14px;line-height:1.45;font-weight:800;margin-top:5px}
+.parent-callout .hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4}
+.share-fallback-back{position:fixed;inset:0;z-index:90;background:rgba(9,31,28,.46);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.share-fallback-card{width:min(560px,100%);background:white;border-radius:24px;padding:18px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 24px 70px rgba(12,42,37,.25)}
+.share-fallback-card h3{margin:0 0 8px;font-size:19px}
+.share-fallback-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.share-fallback-actions{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:15px}
+.share-fallback-primary{border:0;border-radius:14px;background:var(--brand);color:white;padding:12px 14px;font-weight:900;cursor:pointer}
+.share-fallback-close{border:1px solid var(--line);border-radius:14px;background:white;padding:12px 14px;font-weight:800;cursor:pointer}
+@media(max-width:390px){
+  .parent-week-strip{gap:5px}.parent-day{padding:9px 4px}.parent-day strong{font-size:16px}.parent-day .signal{font-size:9px}
+  .share-fallback-actions{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 <div class="app role-student" id="app">
@@ -96,7 +134,7 @@ body{min-height:100vh}
 <div class="drawer-back" id="drawerBack"><aside class="drawer" role="dialog" aria-modal="true" aria-label="Configuración">
   <div class="drawer-head"><h3 data-i18n="settings">Configuración</h3><button class="iconbtn" id="closeDrawer" aria-label="Cerrar">×</button></div>
   <div class="setting"><label data-i18n="language">Idioma de interfaz</label><div class="langrow"><button data-lang="es" class="active">ES</button><button data-lang="en">EN</button></div></div>
-  <div class="setting"><label data-i18n="theme">Color de la aplicación</label><div class="theme-row"><button class="theme-btn" data-theme-choice="ocean"><span class="swatch ocean"></span><span data-i18n="themeOcean">Turquesa</span></button><button class="theme-btn" data-theme-choice="blue"><span class="swatch blue"></span><span data-i18n="themeBlue">Azul</span></button><button class="theme-btn" data-theme-choice="violet"><span class="swatch violet"></span><span data-i18n="themeViolet">Violeta</span></button></div></div>
+  <div class="setting"><label data-i18n="theme">Color de la aplicación</label><div class="theme-row"><button class="theme-btn" data-theme-choice="ocean"><span class="swatch ocean"></span><span data-i18n="themeOcean">Esmeralda</span></button><button class="theme-btn" data-theme-choice="blue"><span class="swatch blue"></span><span data-i18n="themeBlue">Azul</span></button><button class="theme-btn" data-theme-choice="violet"><span class="swatch violet"></span><span data-i18n="themeViolet">Violeta</span></button></div></div>
   <div class="setting"><label data-i18n="activeSources">Fuentes activas</label><div><span class="source-badge">Horario V3</span><span class="source-badge" id="activePasBadge">PAS 008</span></div><p class="tiny" data-i18n="sourceNote">El PAS semanal prevalece sobre el horario general cuando exista contradicción.</p></div>
   <div class="setting"><label data-i18n="weeklyPas">PAS semanal</label><div class="pas-upload"><div class="share-tip"><b>Actualizar PAS</b>En Android con la PWA instalada: desde WhatsApp toca <b style="display:inline">Compartir → PAS Family Planner</b>. Como respaldo, selecciónalo aquí.</div><input id="pasFileInput" type="file" accept="application/pdf,.pdf" hidden><button class="upload-btn" id="pasUploadBtn" type="button"><span>＋</span><span data-i18n="loadPas">Seleccionar PDF</span></button><div class="upload-status" id="pasUploadStatus"><b>PAS activo:</b> PAS 008 · 28 septiembre–2 octubre</div><div class="pas-preview" id="pasPreview" style="display:none"></div><div class="upload-actions" id="pasPreviewActions" style="display:none"><button class="mini-btn primary-mini" id="activatePasBtn" type="button">Activar PAS</button><button class="mini-btn danger-mini" id="discardPasBtn" type="button">Descartar</button></div><div class="upload-actions" id="pasUploadActions" style="display:none"><button class="mini-btn" id="openUploadedPas" type="button" data-i18n="openLoadedPas">Abrir PDF</button></div><p class="tiny" data-i18n="loadPasNote">El PDF se analiza primero. Verás un resumen antes de activarlo; si hay ambigüedades, la aplicación las marca para revisión.</p></div></div>
   <div class="setting"><label data-i18n="sync">Checklist</label><p class="tiny" data-i18n="syncNote">En este HTML portátil, los checks se guardan en este navegador. La sincronización entre celulares requiere conectar el backend compartido al publicar la PWA.</p></div>
@@ -485,11 +523,11 @@ const PREP = [
  {id:'chemistry-kit',subject:'Chemistry',label:'Cuaderno de apuntes + colores + lapiceros + lápiz para Chemistry',days:['TUE','THU']}
 ];
 const I18N={
- es:{student:'Estudiante',parents:'Padres',home:'Inicio',week:'Semana',schedule:'Horario',settings:'Configuración',language:'Idioma de interfaz',theme:'Color de la aplicación',themeOcean:'Turquesa',themeBlue:'Azul',themeViolet:'Violeta',activeSources:'Fuentes activas',weeklyPas:'PAS semanal',loadPas:'Cargar nuevo PAS',openLoadedPas:'Abrir PDF cargado',loadPasNote:'El nuevo PAS se carga aquí. En este HTML portátil el PDF queda guardado como fuente local, pero el contenido visible no cambia hasta que el parser lo procese.',sourceNote:'El PAS semanal prevalece sobre el horario general cuando exista contradicción.',sync:'Checklist',syncNote:'Los checks se guardan únicamente en este dispositivo. No existen cuentas ni sincronización entre dispositivos.',version:'Versión',today:'Hoy',important:'Importante',prepare:'Preparar',nextAssessment:'Próxima evaluación',thisWeek:'Esta semana',assessments:'Evaluaciones',forParents:'Para padres',pasOfDay:'PAS del día',classes:'Clases',noInfo:'Sin información adicional esta semana',sourcePas:'PAS 008 · 28 septiembre–2 octubre',weekTitle:'Semana 28 septiembre–2 octubre',tapDetails:'Toca una materia para ver detalle del PAS',essential:'Conocimientos esenciales',materials:'Materiales',activity:'Actividad',project:'Proyecto',study:'Recursos / estudio',reader:'Plan lector',more:'Información adicional',fullPas:'PAS por materias',open:'Abrir enlace',ready:'listos',generalSchedule:'Horario vigente · V3',break:'Descanso',lunch:'Almuerzo',noneToday:'No hay novedades específicas del PAS para este día.',schoolSource:'Información tomada del PAS semanal vigente.'},
- en:{student:'Student',parents:'Parents',home:'Home',week:'Week',schedule:'Schedule',settings:'Settings',language:'Interface language',theme:'App color',themeOcean:'Turquoise',themeBlue:'Blue',themeViolet:'Violet',activeSources:'Active sources',weeklyPas:'Weekly PAS',loadPas:'Load new PAS',openLoadedPas:'Open loaded PDF',loadPasNote:'Load the new PAS here. In this portable HTML the PDF is stored as a local source, but the visible content does not change until the parser processes it.',sourceNote:'The weekly PAS takes precedence over the general schedule when they conflict.',sync:'Checklist',syncNote:'Checks are stored only on this device. There are no accounts or cross-device synchronization.',version:'Version',today:'Today',important:'Important',prepare:'Prepare',nextAssessment:'Next assessment',thisWeek:'This week',assessments:'Assessments',forParents:'For parents',pasOfDay:'PAS for the day',classes:'Classes',noInfo:'No additional information this week',sourcePas:'PAS 008 · September 28–October 2',weekTitle:'September 28–October 2',tapDetails:'Tap a subject to see PAS details',essential:'Essential knowledge',materials:'Materials',activity:'Activity',project:'Project',study:'Resources / study',reader:'Reading plan',more:'Additional information',fullPas:'PAS by subject',open:'Open link',ready:'ready',generalSchedule:'Current schedule · V3',break:'Break',lunch:'Lunch',noneToday:'No specific PAS updates for this day.',schoolSource:'Information taken from the current weekly PAS.'}
+ es:{student:'Estudiante',parents:'Padres',home:'Inicio',week:'Semana',schedule:'Horario',settings:'Configuración',language:'Idioma de interfaz',theme:'Color de la aplicación',themeOcean:'Esmeralda',themeBlue:'Azul',themeViolet:'Violeta',activeSources:'Fuentes activas',weeklyPas:'PAS semanal',loadPas:'Cargar nuevo PAS',openLoadedPas:'Abrir PDF cargado',loadPasNote:'El nuevo PAS se carga aquí. En este HTML portátil el PDF queda guardado como fuente local, pero el contenido visible no cambia hasta que el parser lo procese.',sourceNote:'El PAS semanal prevalece sobre el horario general cuando exista contradicción.',sync:'Checklist',syncNote:'Los checks se guardan únicamente en este dispositivo. No existen cuentas ni sincronización entre dispositivos.',version:'Versión',today:'Hoy',important:'Importante',prepare:'Preparar',nextAssessment:'Próxima evaluación',thisWeek:'Esta semana',assessments:'Evaluaciones',forParents:'Para padres',pasOfDay:'PAS del día',classes:'Clases',noInfo:'Sin información adicional esta semana',sourcePas:'PAS 008 · 28 septiembre–2 octubre',weekTitle:'Semana 28 septiembre–2 octubre',tapDetails:'Toca una materia para ver detalle del PAS',essential:'Conocimientos esenciales',materials:'Materiales',activity:'Actividad',project:'Proyecto',study:'Recursos / estudio',reader:'Plan lector',more:'Información adicional',fullPas:'PAS por materias',open:'Abrir enlace',ready:'listos',generalSchedule:'Horario vigente · V3',break:'Descanso',lunch:'Almuerzo',noneToday:'No hay novedades específicas del PAS para este día.',schoolSource:'Información tomada del PAS semanal vigente.'},
+ en:{student:'Student',parents:'Parents',home:'Home',week:'Week',schedule:'Schedule',settings:'Settings',language:'Interface language',theme:'App color',themeOcean:'Emerald',themeBlue:'Blue',themeViolet:'Violet',activeSources:'Active sources',weeklyPas:'Weekly PAS',loadPas:'Load new PAS',openLoadedPas:'Open loaded PDF',loadPasNote:'Load the new PAS here. In this portable HTML the PDF is stored as a local source, but the visible content does not change until the parser processes it.',sourceNote:'The weekly PAS takes precedence over the general schedule when they conflict.',sync:'Checklist',syncNote:'Checks are stored only on this device. There are no accounts or cross-device synchronization.',version:'Version',today:'Today',important:'Important',prepare:'Prepare',nextAssessment:'Next assessment',thisWeek:'This week',assessments:'Assessments',forParents:'For parents',pasOfDay:'PAS for the day',classes:'Classes',noInfo:'No additional information this week',sourcePas:'PAS 008 · September 28–October 2',weekTitle:'September 28–October 2',tapDetails:'Tap a subject to see PAS details',essential:'Essential knowledge',materials:'Materials',activity:'Activity',project:'Project',study:'Resources / study',reader:'Reading plan',more:'Additional information',fullPas:'PAS by subject',open:'Open link',ready:'ready',generalSchedule:'Current schedule · V3',break:'Break',lunch:'Lunch',noneToday:'No specific PAS updates for this day.',schoolSource:'Information taken from the current weekly PAS.'}
 };
 let state={role:localStorage.getItem('pas-role')||'student',lang:localStorage.getItem('pas-lang')||'es',theme:localStorage.getItem('pas-theme')||'ocean',page:'home',day:'MON',checks:{}};
-function applyTheme(){document.documentElement.dataset.theme=state.theme;document.querySelectorAll('[data-theme-choice]').forEach(b=>b.classList.toggle('active',b.dataset.themeChoice===state.theme));const colors={ocean:'#0d7f8e',blue:'#315fba',violet:'#7454a8'};document.querySelector('meta[name="theme-color"]')?.setAttribute('content',colors[state.theme]||colors.ocean)}
+function applyTheme(){document.documentElement.dataset.theme=state.theme;document.querySelectorAll('[data-theme-choice]').forEach(b=>b.classList.toggle('active',b.dataset.themeChoice===state.theme));const colors={ocean:'#176B5B',blue:'#315fba',violet:'#7454a8'};document.querySelector('meta[name="theme-color"]')?.setAttribute('content',colors[state.theme]||colors.ocean)}
 applyTheme();
 try{state.checks=JSON.parse(localStorage.getItem('pas-checks-008')||'{}')}catch(e){state.checks={}}
 function t(k){return I18N[state.lang][k]||k}
@@ -589,8 +627,8 @@ const LEGACY_ACTIVE_PAS_STORAGE_KEY='pas-active-data-v024';
 let activePasMeta={number:8,start:28,end:2,monthName:'septiembre',endMonthName:'octubre',year:2026,label:'PAS 008',weekLabel:'28 septiembre–2 octubre',parserVersion:'embedded-baseline-v26'};
 let pendingPas=null,pendingPasFile=null;
 
-Object.assign(I18N.es,{loadPas:'Seleccionar PDF',openLoadedPas:'Abrir PDF',loadPasNote:'En Android con la PWA instalada también puedes usar WhatsApp → Compartir → PAS Family Planner. El PDF se analiza primero y tú decides si lo activas.',sourcePas:'PAS semanal'});
-Object.assign(I18N.en,{loadPas:'Select PDF',openLoadedPas:'Open PDF',loadPasNote:'On Android with the installed PWA you can also use WhatsApp → Share → PAS Family Planner. The PDF is analyzed first and you decide whether to activate it.',sourcePas:'Weekly PAS'});
+Object.assign(I18N.es,{loadPas:'Seleccionar PDF',openLoadedPas:'Abrir PDF',loadPasNote:'Puedes compartir el PDF desde Android o seleccionarlo desde el celular. Si la aplicación de correo abre PAS Family Planner sin adjuntar el archivo, usa Seleccionar PDF. Siempre verás una vista previa antes de activarlo.',sourcePas:'PAS semanal'});
+Object.assign(I18N.en,{loadPas:'Select PDF',openLoadedPas:'Open PDF',loadPasNote:'You can share the PDF from Android or select it from your phone. If your email app opens PAS Family Planner without attaching the file, use Select PDF. You will always see a preview before activation.',sourcePas:'Weekly PAS'});
 
 // Fix canonical assessment while preserving the literal source label.
 ASSESSMENTS.forEach(a=>{if(a.subject==='Lenguaje y literatura'){a.sourceLabel='Lenguaje y literatura';a.subject='Spanish'}else if(!a.sourceLabel)a.sourceLabel=a.subject});
@@ -606,11 +644,29 @@ function activePasBadge(){return activePasMeta.label}
 function eventCount(){return PARENT_INFO.filter(x=>x.day!=='WEEK').length}
 function monthNameEs(mi){return ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][mi]||''}
 
-todayKey = function(){
-  const now=new Date();
-  const hit=WEEK.find(d=>d.year!=null?d.year===now.getFullYear()&&d.month===now.getMonth()&&d.date===now.getDate():activePasMeta.year===now.getFullYear()&&({enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,octubre:9,noviembre:10,diciembre:11}[activePasMeta.monthName]===now.getMonth())&&d.date===now.getDate());
-  return hit?.key||'MON';
+function localDateIso(date){
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 }
+function weekEntryDate(entry){
+  if(entry?.iso){
+    const m=String(entry.iso).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if(m)return new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));
+  }
+  if(entry?.year!=null&&entry?.month!=null&&entry?.date!=null)return new Date(entry.year,entry.month,entry.date);
+  return null;
+}
+function activeWeekContext(now=new Date()){
+  const iso=localDateIso(now);
+  const exact=WEEK.find(d=>d.iso===iso||((x=>x&&localDateIso(x)===iso)(weekEntryDate(d))));
+  if(exact)return {key:exact.key,inWeek:true,before:false,after:false};
+  const dated=WEEK.map(entry=>({entry,date:weekEntryDate(entry)})).filter(x=>x.date&&!Number.isNaN(x.date.getTime()));
+  if(!dated.length)return {key:WEEK[0]?.key||'MON',inWeek:false,before:false,after:false};
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if(today<dated[0].date)return {key:dated[0].entry.key,inWeek:false,before:true,after:false};
+  if(today>dated[dated.length-1].date)return {key:dated[dated.length-1].entry.key,inWeek:false,before:false,after:true};
+  return {key:dated[0].entry.key,inWeek:false,before:false,after:false};
+}
+todayKey = function(){return activeWeekContext(new Date()).key;}
 
 function infoTags(subject,day){
   let tags=[];
@@ -636,16 +692,40 @@ function assessmentCard(a){const d=dayObj(a.day);return `<div class="card"><div 
 function renderTodayClasses(day){return (SCHEDULE[day]||[]).map(([time,sub])=>{if(sub==='BREAK'||sub==='LUNCH')return `<div class="card" style="background:#fafcfc"><div class="row"><div class="time">${time}</div><div class="grow"><div class="title" style="color:#809399">${sub==='BREAK'?t('break'):t('lunch')}</div></div></div></div>`;const x=SUBJECTS[sub]||{};let a=assessmentsFor(day).find(a=>a.subject===sub);let desc=a?.topic||x.essential||t('noInfo');return `<details class="subject-card"><summary class="subject-trigger"><div><b>${time} · ${esc(sub)}</b><small>${esc(desc.length>90?desc.slice(0,90)+'…':desc)}</small>${infoTags(sub,day)}</div><span class="chev" aria-hidden="true">⌄</span></summary><div class="subject-body">${renderSubjectDetails(sub,day)}</div></details>`}).join('')}
 
 function renderHome(){
- const el=document.getElementById('homePage'),day=state.day,d=dayObj(day),todayPrep=prepFor(day),next=ASSESSMENTS.find(a=>WEEK.findIndex(x=>x.key===a.day)>=WEEK.findIndex(x=>x.key===day))||ASSESSMENTS[0];
+ const el=document.getElementById('homePage'),ctx=activeWeekContext(new Date()),day=state.day,d=dayObj(day),todayPrep=prepFor(day);
+ const dayIndex=WEEK.findIndex(x=>x.key===day);
+ const next=ctx.after?null:(ASSESSMENTS.find(a=>WEEK.findIndex(x=>x.key===a.day)>=Math.max(0,dayIndex))||ASSESSMENTS[0]||null);
  if(state.role==='student'){
-  el.innerHTML=`<div class="eyebrow">${esc(sourcePasLabel())}</div><h1 class="h1">${t('today')}: ${dayLabel(day)} ${d?.date??''}</h1><p class="sub">${t('schoolSource')}</p><div class="hero"><div class="small">${esc(activePasMeta.label)} · 9°A</div><h2>${t('important')}</h2><p>${next?`${shortDay(next.day)} · ${esc(next.subject)} — ${esc(next.topic)}`:t('noneToday')}</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${PREP.length} ${t('prepare').toLowerCase()}</span></div></div><div class="desktop-2"><div><div class="section"><div class="section-head"><h3>${t('today')}</h3><span class="meta">${dayLabel(day)} ${d?.date??''}</span></div>${renderTodayClasses(day)}</div></div><div><div class="section"><div class="section-head"><h3>${t('prepare')}</h3><span class="meta">${todayPrep.length}</span></div>${checklistHtml(todayPrep,true)}</div><div class="section"><div class="section-head"><h3>${t('nextAssessment')}</h3></div>${next?assessmentCard(next):`<div class="empty">—</div>`}</div></div></div>`;
+  const lead=ctx.inWeek?t('today'):(ctx.before?(state.lang==='es'?'Próxima semana':'Next week'):(state.lang==='es'?'Semana':'Week'));
+  el.innerHTML=`<div class="eyebrow">${esc(sourcePasLabel())}</div><h1 class="h1">${esc(lead)}: ${dayLabel(day)} ${d?.date??''}</h1><p class="sub">${t('schoolSource')}</p>
+  <div class="hero"><div class="small">${esc(activePasMeta.label)} · 9°A</div><h2>${t('important')}</h2><p>${next?`${shortDay(next.day)} · ${esc(next.subject)} — ${esc(next.topic)}`:t('noneToday')}</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${PREP.length} ${t('prepare').toLowerCase()}</span></div></div>
+  <div class="desktop-2"><div><div class="section"><div class="section-head"><h3>${ctx.inWeek?t('today'):(state.lang==='es'?'Día seleccionado':'Selected day')}</h3><span class="meta">${dayLabel(day)} ${d?.date??''}</span></div>${renderTodayClasses(day)}</div></div><div><div class="section"><div class="section-head"><h3>${t('prepare')}</h3><span class="meta">${todayPrep.length}</span></div>${checklistHtml(todayPrep,true)}</div><div class="section"><div class="section-head"><h3>${t('nextAssessment')}</h3></div>${next?assessmentCard(next):`<div class="empty">—</div>`}</div></div></div>`;
  }else{
-  const done=PREP.filter(i=>state.checks[i.id]).length,primary=PARENT_INFO.find(x=>x.day!=='WEEK');
-  el.innerHTML=`<div class="eyebrow">${esc(sourcePasLabel())}</div><h1 class="h1">${esc(weekTitleLabel())}</h1><p class="sub">Una sola vista con lo importante del PAS para acompañar la semana.</p><div class="hero"><div class="small">${esc(activePasMeta.label)} · 9°A</div><h2>${t('thisWeek')}</h2><p>${primary?`${esc(primary.title)} · ${esc(primary.text)}`:'Información semanal del PAS'}</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${PREP.length-done} pendientes de preparar</span></div></div><div class="stats"><div class="stat"><b>${ASSESSMENTS.length}</b><span>${t('assessments')}</span></div><div class="stat"><b>${PREP.length-done}</b><span>Pendientes</span></div><div class="stat"><b>${eventCount()}</b><span>Evento familiar</span></div></div><div class="desktop-2"><div><div class="section"><div class="section-head"><h3>${t('assessments')}</h3><span class="meta">PAS semanal</span></div>${ASSESSMENTS.map(assessmentCard).join('')}</div></div><div><div class="section"><div class="section-head"><h3>${t('prepare')}</h3><span class="meta">${done}/${PREP.length}</span></div>${checklistHtml(PREP,true)}</div><div class="section"><div class="section-head"><h3>${t('forParents')}</h3></div>${parentCards()}</div></div></div>`;
+  const done=PREP.filter(i=>state.checks[i.id]).length,pending=Math.max(0,PREP.length-done),parentCount=PARENT_INFO.length;
+  const es=state.lang==='es';
+  const weekStrip=WEEK.map(x=>{
+    const ac=assessmentsFor(x.key).length,pc=prepFor(x.key).length;
+    const signals=[];if(ac)signals.push(`${ac} ${es?'eval.':'exam'}`);if(pc)signals.push(`${pc} ${es?'prep.':'prep'}`);
+    const current=activeWeekContext(new Date()).key===x.key&&activeWeekContext(new Date()).inWeek;
+    return `<div class="parent-day ${current?'current':''}"><b>${state.lang==='es'?x.short:x.shortEn}</b><strong>${x.date}</strong><span class="signal ${ac?'hot':''}">${signals.length?signals.join(' · '):(es?'Sin novedades':'No updates')}</span></div>`;
+  }).join('');
+  const priority=next?`${shortDay(next.day)} ${dayObj(next.day)?.date??''} · ${esc(next.subject)} — ${esc(next.topic)}`:(es?'Sin evaluaciones anunciadas en el PAS vigente.':'No assessments announced in the current PAS.');
+  const helper=next?(es?'Evaluación informada expresamente en el PAS semanal.':'Assessment explicitly listed in the weekly PAS.'):(es?'Consulta Preparar y la información para padres.':'Check Prepare and parent information.');
+  el.innerHTML=`<div class="eyebrow">${esc(sourcePasLabel())}</div>
+  <div class="parent-title-row"><div><h1 class="h1">${es?'Resumen familiar':'Family summary'}</h1><p class="sub">${es?'Lo esencial de la semana, sin duplicar el horario completo.':'The essentials for the week, without duplicating the full schedule.'}</p></div><span class="release-badge">V 2.6</span></div>
+  <div class="parent-hero"><div class="small">${esc(activePasMeta.label)} · 9°A</div><h2>${es?'Lo importante esta semana':'What matters this week'}</h2><p>${priority}</p><div class="hero-tags"><span class="hero-tag">${ASSESSMENTS.length} ${t('assessments').toLowerCase()}</span><span class="hero-tag">${pending} ${es?'por preparar':'to prepare'}</span><span class="hero-tag">${parentCount} ${es?'para padres':'for parents'}</span></div></div>
+  <div class="stats"><div class="stat"><b>${ASSESSMENTS.length}</b><span>${t('assessments')}</span></div><div class="stat"><b>${pending}</b><span>${es?'Por preparar':'To prepare'}</span></div><div class="stat"><b>${parentCount}</b><span>${t('forParents')}</span></div></div>
+  <div class="section"><div class="section-head"><h3>${es?'Semana de un vistazo':'Week at a glance'}</h3><span class="meta">${esc(activePasMeta.weekLabel)}</span></div><div class="parent-week-strip">${weekStrip}</div></div>
+  <div class="section"><div class="parent-callout"><div class="k">${es?'Prioridad':'Priority'}</div><div class="v">${priority}</div><div class="hint">${helper}</div></div></div>
+  <div class="desktop-2"><div>
+    <div class="section"><div class="section-head"><h3>${t('assessments')}</h3><span class="meta">PAS semanal</span></div>${ASSESSMENTS.length?ASSESSMENTS.map(assessmentCard).join(''):`<div class="empty">${es?'Sin evaluaciones anunciadas.':'No assessments announced.'}</div>`}</div>
+  </div><div>
+    <div class="section"><div class="section-head"><h3>${es?'Preparar esta semana':'Prepare this week'}</h3><span class="meta">${done}/${PREP.length}</span></div>${checklistHtml(PREP,true)}</div>
+    <div class="section"><div class="section-head"><h3>${t('forParents')}</h3><span class="meta">${parentCount}</span></div>${parentCount?parentCards():`<div class="empty">${es?'Sin información específica para padres.':'No specific parent information.'}</div>`}</div>
+  </div></div>`;
  }
  bindChecks();
 }
-
 function renderWeek(){
  const el=document.getElementById('weekPage'),d=dayObj(state.day),a=assessmentsFor(state.day),p=prepFor(state.day),parent=PARENT_INFO.filter(x=>x.day===state.day);let focus=[];
  a.forEach(x=>focus.push(`<div class="focus-item"><div class="k">${t('assessments')} · ${esc(x.subject)}</div><div class="v">${esc(x.topic)}</div>${x.sourceLabel&&x.sourceLabel!==x.subject?`<div class="tiny">Fuente PAS: ${esc(x.sourceLabel)}</div>`:''}</div>`));
@@ -701,15 +781,16 @@ restoreActivePas();
 try{state.checks=JSON.parse(localStorage.getItem(checkStorageKey())||'{}')}catch(_){state.checks={}}
 state.day=todayKey();updateSourceBadges();
 if(location.search.includes('shared=1'))setTimeout(readSharedPas,100);
-if(location.search.includes('share_missing=1'))setTimeout(()=>{
-  drawer.classList.add('open');
-  const box=document.getElementById('pasUploadStatus');
-  if(box)box.innerHTML='<b>El correo abrió PAS Family Planner, pero Android no entregó el archivo PDF.</b><br>Para continuar, toca <b>Seleccionar PDF</b> y elige el PAS guardado en tu celular.';
-  const btn=document.getElementById('pasUploadBtn');
-  if(btn){btn.scrollIntoView({block:'center',behavior:'smooth'});btn.focus();}
-  try{history.replaceState({},'',location.pathname+location.hash)}catch(_){}
-},180);
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('Service worker no registrado',err)));}
+function showShareFallback(){
+  document.getElementById('shareFallbackBack')?.remove();
+  const back=document.createElement('div');back.className='share-fallback-back';back.id='shareFallbackBack';
+  back.innerHTML='<div class="share-fallback-card" role="dialog" aria-modal="true" aria-label="Seleccionar PDF"><h3>No recibimos el archivo del correo</h3><p>El correo abrió PAS Family Planner, pero Android no entregó el PDF. Guarda el PAS en el celular y selecciónalo aquí. El análisis se realiza localmente y verás una vista previa antes de activarlo.</p><div class="share-fallback-actions"><button class="share-fallback-primary" id="shareFallbackPick" type="button">Seleccionar PDF</button><button class="share-fallback-close" id="shareFallbackClose" type="button">Cerrar</button></div></div>';
+  document.body.appendChild(back);
+  document.getElementById('shareFallbackClose')?.addEventListener('click',()=>back.remove());
+  document.getElementById('shareFallbackPick')?.addEventListener('click',()=>{back.remove();drawer.classList.add('open');setTimeout(()=>document.getElementById('pasFileInput')?.click(),80)});
+}
+if(location.search.includes('share_missing=1'))setTimeout(()=>{showShareFallback();try{history.replaceState({},'',location.pathname+location.hash)}catch(_){}},180);
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>reg.update()).catch(err=>console.warn('Service worker no registrado',err)));}
 
 
 refreshPasUploadStatus();
