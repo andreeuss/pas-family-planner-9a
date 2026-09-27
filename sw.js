@@ -1,5 +1,5 @@
-const CACHE_NAME = 'pas-family-v0.2.5.2';
-const HOTFIX_SCRIPT = './hotfix-0.2.5.2.js';
+const CACHE_NAME = 'pas-family-v0.2.5.3';
+const HOTFIX_SCRIPT = './hotfix-0.2.5.3.js';
 const APP_SHELL = [
   './',
   './index.html',
@@ -39,10 +39,25 @@ function openShareDb() {
   });
 }
 
-async function isPdf(file) {
-  if (!(file instanceof Blob) || file.size < 5) return false;
-  const signature = new Uint8Array(await file.slice(0, 5).arrayBuffer());
-  return String.fromCharCode(...signature) === '%PDF-';
+async function looksLikePdf(file) {
+  if (!(file instanceof Blob) || file.size <= 0) return false;
+  const name = String(file.name || '').toLowerCase();
+  const type = String(file.type || '').toLowerCase();
+  let signatureOk = false;
+  try {
+    const signature = new Uint8Array(await file.slice(0, 5).arrayBuffer());
+    signatureOk = String.fromCharCode(...signature) === '%PDF-';
+  } catch (_) {}
+  return signatureOk || type === 'application/pdf' || type === 'application/octet-stream' || name.endsWith('.pdf');
+}
+
+function firstSharedBlob(form) {
+  const direct = form.get('pas_pdf');
+  if (direct instanceof Blob) return direct;
+  for (const value of form.values()) {
+    if (value instanceof Blob) return value;
+  }
+  return null;
 }
 
 async function storeSharedPdf(file) {
@@ -67,9 +82,12 @@ async function storeSharedPdf(file) {
 async function receiveShare(request) {
   try {
     const form = await request.formData();
-    const file = form.get('pas_pdf');
-    if (!await isPdf(file)) {
-      return new Response('El archivo compartido no es un PDF válido.', { status: 415, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    const file = firstSharedBlob(form);
+    if (!file) {
+      return new Response('No se recibió ningún archivo PDF desde la aplicación de origen.', { status: 400, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    }
+    if (!await looksLikePdf(file)) {
+      return new Response('El archivo compartido no pudo identificarse como PDF. Intenta abrirlo primero y luego usa Compartir PDF, o usa Seleccionar PDF dentro de PAS Family Planner.', { status: 415, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     }
     await storeSharedPdf(file);
     return Response.redirect(new URL('./?shared=1', self.registration.scope), 303);
