@@ -1,5 +1,5 @@
-const CACHE_NAME = 'pas-family-v0.2.5.1';
-const HOTFIX_SCRIPT = './hotfix-0.2.5.1.js';
+const CACHE_NAME = 'pas-family-v0.2.5.2';
+const HOTFIX_SCRIPT = './hotfix-0.2.5.2.js';
 const APP_SHELL = [
   './',
   './index.html',
@@ -40,7 +40,7 @@ function openShareDb() {
 }
 
 async function isPdf(file) {
-  if (!(file instanceof Blob) || file.type.toLowerCase() !== 'application/pdf') return false;
+  if (!(file instanceof Blob) || file.size < 5) return false;
   const signature = new Uint8Array(await file.slice(0, 5).arrayBuffer());
   return String.fromCharCode(...signature) === '%PDF-';
 }
