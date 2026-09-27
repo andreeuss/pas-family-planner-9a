@@ -1,5 +1,5 @@
-const CACHE_NAME = 'pas-family-v0.2.5.3';
-const HOTFIX_SCRIPT = './hotfix-0.2.5.3.js';
+const CACHE_NAME = 'pas-family-v0.2.5.4';
+const HOTFIX_SCRIPT = './hotfix-0.2.5.4.js';
 const APP_SHELL = [
   './',
   './index.html',
@@ -84,7 +84,7 @@ async function receiveShare(request) {
     const form = await request.formData();
     const file = firstSharedBlob(form);
     if (!file) {
-      return new Response('No se recibió ningún archivo PDF desde la aplicación de origen.', { status: 400, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+      return Response.redirect(new URL('./?share_missing=1', self.registration.scope), 303);
     }
     if (!await looksLikePdf(file)) {
       return new Response('El archivo compartido no pudo identificarse como PDF. Intenta abrirlo primero y luego usa Compartir PDF, o usa Seleccionar PDF dentro de PAS Family Planner.', { status: 415, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
