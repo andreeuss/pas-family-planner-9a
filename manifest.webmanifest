@@ -20,7 +20,7 @@
     "enctype": "multipart/form-data",
     "params": {
       "files": [
-        { "name": "pas_pdf", "accept": ["application/pdf"] }
+        { "name": "pas_pdf", "accept": ["application/pdf", "application/octet-stream", ".pdf"] }
       ]
     }
   }
