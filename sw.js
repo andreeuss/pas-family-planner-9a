@@ -1,5 +1,4 @@
-const CACHE_NAME = 'pas-family-v0.2.5.4';
-const HOTFIX_SCRIPT = './hotfix-0.2.5.4.js';
+const CACHE_NAME = 'pas-family-v2.6';
 const APP_SHELL = [
   './',
   './index.html',
@@ -8,22 +7,30 @@ const APP_SHELL = [
   './assets/pdf.worker.min.mjs',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/maskable-512.png',
-  HOTFIX_SCRIPT
+  './icons/maskable-512.png'
 ];
+
 const SHARE_DB = 'pas-family-share-v1';
 const SHARE_STORE = 'inbox';
 const SHARE_KEY = 'shared-latest';
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(Promise.all([
-    caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))),
-    self.clients.claim()
-  ]));
+  event.waitUntil(
+    Promise.all([
+      caches.keys().then(keys =>
+        Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
+      ),
+      self.clients.claim()
+    ])
+  );
 });
 
 function openShareDb() {
@@ -48,14 +55,17 @@ async function looksLikePdf(file) {
     const signature = new Uint8Array(await file.slice(0, 5).arrayBuffer());
     signatureOk = String.fromCharCode(...signature) === '%PDF-';
   } catch (_) {}
-  return signatureOk || type === 'application/pdf' || type === 'application/octet-stream' || name.endsWith('.pdf');
+  return signatureOk ||
+    type === 'application/pdf' ||
+    type === 'application/octet-stream' ||
+    name.endsWith('.pdf');
 }
 
 function firstSharedBlob(form) {
   const direct = form.get('pas_pdf');
-  if (direct instanceof Blob) return direct;
+  if (direct instanceof Blob && direct.size > 0) return direct;
   for (const value of form.values()) {
-    if (value instanceof Blob) return value;
+    if (value instanceof Blob && value.size > 0) return value;
   }
   return null;
 }
@@ -67,7 +77,7 @@ async function storeSharedPdf(file) {
     tx.objectStore(SHARE_STORE).put({
       id: SHARE_KEY,
       name: file.name || 'PAS compartido.pdf',
-      type: file.type,
+      type: file.type || 'application/pdf',
       size: file.size,
       savedAt: new Date().toISOString(),
       blob: file
@@ -83,57 +93,57 @@ async function receiveShare(request) {
   try {
     const form = await request.formData();
     const file = firstSharedBlob(form);
+
+    // Some Android email apps invoke the share target but do not include
+    // the attachment. Route that case back into the app's file picker.
     if (!file) {
       return Response.redirect(new URL('./?share_missing=1', self.registration.scope), 303);
     }
+
     if (!await looksLikePdf(file)) {
-      return new Response('El archivo compartido no pudo identificarse como PDF. Intenta abrirlo primero y luego usa Compartir PDF, o usa Seleccionar PDF dentro de PAS Family Planner.', { status: 415, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+      return Response.redirect(new URL('./?share_missing=1', self.registration.scope), 303);
     }
+
     await storeSharedPdf(file);
     return Response.redirect(new URL('./?shared=1', self.registration.scope), 303);
-  } catch (error) {
-    return new Response('No fue posible recibir el PDF compartido.', { status: 400, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
-  }
-}
-
-async function injectHotfix(response) {
-  if (!response) return response;
-  try {
-    const html = await response.text();
-    const tag = '<script src="./hotfix-0.2.5.1.js"></script>';
-    const patched = html.includes('hotfix-0.2.5.1.js') ? html : html.replace(/<\/body>/i, `${tag}\n</body>`);
-    const headers = new Headers(response.headers);
-    headers.set('Content-Type', 'text/html; charset=utf-8');
-    headers.delete('Content-Length');
-    return new Response(patched, { status: response.status, statusText: response.statusText, headers });
   } catch (_) {
-    return response;
+    return Response.redirect(new URL('./?share_missing=1', self.registration.scope), 303);
   }
 }
 
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const shareUrl = new URL('./share-target', self.registration.scope);
+
   if (event.request.method === 'POST' && url.href === shareUrl.href) {
     event.respondWith(receiveShare(event.request));
     return;
   }
+
   if (event.request.method !== 'GET') return;
+
   if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        return await injectHotfix(await fetch(event.request));
-      } catch (_) {
-        return injectHotfix(await caches.match('./index.html'));
-      }
-    })());
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
+          return response;
+        })
+        .catch(() => caches.match('./index.html'))
+    );
     return;
   }
+
   if (url.origin === self.location.origin) {
-    event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
-      const copy = response.clone();
-      caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-      return response;
-    })));
+    event.respondWith(
+      caches.match(event.request).then(cached =>
+        cached || fetch(event.request).then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+          return response;
+        })
+      )
+    );
   }
 });
